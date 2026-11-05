@@ -1,0 +1,34 @@
+{
+  "name": "deathmatch-online",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "dev": "npm run build -w @deathmatch/shared && concurrently --kill-others -n shared,server,web -c yellow,cyan,magenta \"npm run dev -w @deathmatch/shared\" \"npm run dev -w @deathmatch/server\" \"npm run dev -w @deathmatch/web\"",
+    "build": "npm run build -w @deathmatch/shared && npm run build -w @deathmatch/server && npm run build -w @deathmatch/web",
+    "typecheck": "tsc -p tsconfig.tools.json && npm run typecheck --workspaces --if-present",
+    "pretest": "npm run build -w @deathmatch/shared",
+    "test": "vitest run",
+    "pretest:watch": "npm run build -w @deathmatch/shared",
+    "test:watch": "vitest",
+    "test:integration": "npm run build -w @deathmatch/shared && tsx scripts/smoke.ts",
+    "check": "npm run typecheck && npm test && npm run build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "concurrently": "^9.2.1",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.0"
+  }
+}

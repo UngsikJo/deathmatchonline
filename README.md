@@ -144,6 +144,7 @@ cp apps/game-server/.env.example apps/game-server/.env
 | `npm run dev`                         | 공통 규칙 watch + 게임 서버 + 웹 동시 실행             |
 | `npm run check`                       | 타입 검사 → 단위 테스트 → 공유·서버·웹 빌드            |
 | `npm run test:integration`            | 별도 임시 포트에서 실제 서버와 SDK 클라이언트 2개 검증 |
+| `npm run test:db`                     | 폐기용 PostgreSQL에서 migration·관계 제약·RLS 검증     |
 | `npm run test:watch`                  | 규칙 테스트 watch                                      |
 | `npm run format`                      | 코드·문서 포맷 정리, PRD는 제외                        |
 | `npm run format:check`                | 포맷 확인                                              |
@@ -161,6 +162,8 @@ GitHub 자동 CI는 아직 활성화하지 않았습니다. 현재 Git 인증에
 - [Supabase Auth](https://supabase.com/docs/guides/auth)
 - [PRD와 에셋 조사](docs/PRD.md)
 
+ERD 기반 DB 준비에서는 타입 검사·단위 테스트 30개·웹/서버 빌드와 PostgreSQL 16.14의 스키마·권한·이관 중단 검사를 통과했습니다. `test:db`에는 `initdb`, `pg_ctl`, `psql`이 필요합니다. 실제 Supabase 적용·정산 RPC·게임의 영구 저장 연결은 [백엔드 준비서](docs/BACKEND_IMPLEMENTATION_PLAN.md)의 후속 작업입니다.
+
 ## 개발 문서와 다음 단계
 
 상세 문서와 프로젝트 작업 명세는 [`docs/`](docs/README.md)에 모아 관리합니다.
@@ -173,6 +176,8 @@ GitHub 자동 CI는 아직 활성화하지 않았습니다. 현재 Git 인증에
 - [개발 환경·작업 규칙](docs/DEVELOPMENT.md)
 - [한국어 커밋 메시지 작성 규칙](docs/COMMIT_CONVENTION.md)
 - [Supabase 설정과 DB 스키마 적용 안내](docs/SUPABASE.md)
+- [ERD 기반 DB 테이블·관계 명세](docs/DATABASE.md)
+- [백엔드 구현 준비와 후속 작업](docs/BACKEND_IMPLEMENTATION_PLAN.md)
 - [에셋 출처와 라이선스 기록](docs/ASSET_LICENSES.md)
 - [자동 CI 설정 템플릿과 활성화 방법](docs/CI.md)
 

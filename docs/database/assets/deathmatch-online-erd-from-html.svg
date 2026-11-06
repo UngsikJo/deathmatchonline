@@ -1,0 +1,294 @@
+<svg width="1210" height="1210" style="color:#e4e8ee;background:#191d23" viewBox="0 0 1210 1210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Deathmatch Online ERD. 가운데 auth.users 위로 profiles, player_stats, active_participations가 계정당 최대 1행으로 붙고, 아래로 match_participants, matches, match_events가 경기 기록으로 연결된다. matches는 참가자 2행과 이벤트 여러 행을 가지며, active_participations는 FK 없이 matches를 가리킨다.">
+<desc>사용자가 제공한 Deathmatch Online ERD.html의 관계도를 내보낸 이미지입니다. 첨부 사진의 원본 파일은 아닙니다.</desc>
+<rect width="1210" height="1210" fill="#191d23"/>
+<g transform="translate(0 88)">
+
+
+<text x="40" y="30" text-anchor="start" font-size="11.5" fill="currentColor" fill-opacity="0.58"><tspan font-family="'IBM Plex Sans KR', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif">계정당 최대 1행 · </tspan><tspan font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace">user_id</tspan><tspan font-family="'IBM Plex Sans KR', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif"> = PK</tspan></text>
+<text x="40" y="630" text-anchor="start" font-size="11.5" fill="currentColor" fill-opacity="0.58"><tspan font-family="'IBM Plex Sans KR', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif">경기 단위 기록</tspan></text>
+<g aria-label="profiles">
+<rect x="40" y="44" width="310" height="162" rx="8" fill="currentColor" fill-opacity="0.025" stroke="currentColor" stroke-opacity="0.42" stroke-width="1.2"/>
+<path d="M40 102 V52 Q40 44 48 44 H342 Q350 44 350 52 V102 Z" fill="currentColor" fill-opacity="0.06"/>
+<line x1="40" y1="102" x2="350" y2="102" stroke="currentColor" stroke-opacity="0.22"/>
+<text x="54" y="68" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="14.5" font-weight="600" fill="currentColor">profiles</text>
+<rect x="54" y="76" width="102.6" height="18" rx="9" fill="none" stroke="currentColor" stroke-opacity="0.4"/>
+<text x="63" y="88.8" font-family="'IBM Plex Sans KR', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif" font-size="10.5" fill="currentColor" fill-opacity="0.86">본인 닉네임만 수정</text>
+<text x="52" y="118" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.95">PK</text>
+<text x="68.5" y="118" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.6">FK</text>
+<text x="88" y="118" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">user_id</text>
+<text x="338" y="118" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">uuid</text>
+<line x1="50" y1="126" x2="340" y2="126" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="88" y="142" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">nickname</text>
+<text x="338" y="142" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">text</text>
+<line x1="50" y1="150" x2="340" y2="150" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="52" y="166" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.6">UQ</text>
+<text x="88" y="166" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">nickname_normalized</text>
+<text x="338" y="166" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">text</text>
+<line x1="50" y1="174" x2="340" y2="174" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="88" y="190" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">created_at</text>
+<text x="338" y="190" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">timestamptz</text>
+</g>
+<g aria-label="player_stats">
+<rect x="440" y="44" width="310" height="234" rx="8" fill="currentColor" fill-opacity="0.025" stroke="currentColor" stroke-opacity="0.42" stroke-width="1.2"/>
+<path d="M440 102 V52 Q440 44 448 44 H742 Q750 44 750 52 V102 Z" fill="currentColor" fill-opacity="0.06"/>
+<line x1="440" y1="102" x2="750" y2="102" stroke="currentColor" stroke-opacity="0.22"/>
+<text x="454" y="68" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="14.5" font-weight="600" fill="currentColor">player_stats</text>
+<rect x="454" y="76" width="70.2" height="18" rx="9" fill="#2f6fdb" fill-opacity="0.14" stroke="#2f6fdb" stroke-opacity="0.8"/>
+<text x="463" y="88.8" font-family="'IBM Plex Sans KR', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif" font-size="10.5" fill="currentColor" fill-opacity="0.86">서버만 기록</text>
+<text x="452" y="118" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.95">PK</text>
+<text x="468.5" y="118" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.6">FK</text>
+<text x="488" y="118" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">user_id</text>
+<text x="738" y="118" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">uuid</text>
+<line x1="450" y1="126" x2="740" y2="126" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="142" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">current_streak</text>
+<text x="738" y="142" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">int</text>
+<line x1="450" y1="150" x2="740" y2="150" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="166" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">best_streak</text>
+<text x="738" y="166" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">int</text>
+<line x1="450" y1="174" x2="740" y2="174" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="190" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">best_streak_achieved_at</text>
+<text x="738" y="190" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">timestamptz?</text>
+<line x1="450" y1="198" x2="740" y2="198" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="214" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">wins</text>
+<text x="738" y="214" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">int</text>
+<line x1="450" y1="222" x2="740" y2="222" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="238" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">losses</text>
+<text x="738" y="238" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">int</text>
+<line x1="450" y1="246" x2="740" y2="246" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="262" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">draws</text>
+<text x="738" y="262" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">int</text>
+</g>
+<g aria-label="active_participations">
+<rect x="840" y="44" width="310" height="162" rx="8" fill="currentColor" fill-opacity="0.025" stroke="currentColor" stroke-opacity="0.42" stroke-width="1.2"/>
+<path d="M840 102 V52 Q840 44 848 44 H1142 Q1150 44 1150 52 V102 Z" fill="currentColor" fill-opacity="0.06"/>
+<line x1="840" y1="102" x2="1150" y2="102" stroke="currentColor" stroke-opacity="0.22"/>
+<text x="854" y="68" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="14.5" font-weight="600" fill="currentColor">active_participations</text>
+<rect x="854" y="76" width="70.2" height="18" rx="9" fill="#2f6fdb" fill-opacity="0.14" stroke="#2f6fdb" stroke-opacity="0.8"/>
+<text x="863" y="88.8" font-family="'IBM Plex Sans KR', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif" font-size="10.5" fill="currentColor" fill-opacity="0.86">서버만 기록</text>
+<text x="852" y="118" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.95">PK</text>
+<text x="868.5" y="118" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.6">FK</text>
+<text x="888" y="118" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">user_id</text>
+<text x="1138" y="118" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">uuid</text>
+<line x1="850" y1="126" x2="1140" y2="126" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="888" y="142" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">queue_or_match_id</text>
+<text x="1138" y="142" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">text</text>
+<line x1="850" y1="150" x2="1140" y2="150" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="888" y="166" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">state</text>
+<text x="1138" y="166" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">text</text>
+<line x1="850" y1="174" x2="1140" y2="174" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="888" y="190" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">lease_expires_at</text>
+<text x="1138" y="190" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">timestamptz</text>
+</g>
+<g aria-label="auth.users">
+<rect x="440" y="368" width="310" height="186" rx="8" fill="currentColor" fill-opacity="0.025" stroke="currentColor" stroke-opacity="0.42" stroke-width="1.2"/>
+<path d="M440 426 V376 Q440 368 448 368 H742 Q750 368 750 376 V426 Z" fill="currentColor" fill-opacity="0.06"/>
+<line x1="440" y1="426" x2="750" y2="426" stroke="currentColor" stroke-opacity="0.22"/>
+<text x="454" y="392" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="14.5" font-weight="600" fill="currentColor"><tspan fill-opacity="0.5">auth.</tspan>users</text>
+<rect x="454" y="400" width="114.6" height="18" rx="9" fill="none" stroke="currentColor" stroke-opacity="0.45" stroke-dasharray="3 2.5"/>
+<text x="463" y="412.8" font-family="'IBM Plex Sans KR', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif" font-size="10.5" fill="currentColor" fill-opacity="0.86">Supabase Auth 관리</text>
+<text x="452" y="442" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.95">PK</text>
+<text x="488" y="442" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">id</text>
+<text x="738" y="442" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">uuid</text>
+<line x1="450" y1="450" x2="740" y2="450" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="466" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">email</text>
+<text x="738" y="466" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">varchar</text>
+<line x1="450" y1="474" x2="740" y2="474" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="490" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">email_confirmed_at</text>
+<text x="738" y="490" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">timestamptz?</text>
+<line x1="450" y1="498" x2="740" y2="498" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="514" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">created_at</text>
+<text x="738" y="514" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">timestamptz</text>
+<line x1="450" y1="522" x2="740" y2="522" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="538" font-family="'IBM Plex Sans KR', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif" font-size="11" fill="currentColor" fill-opacity="0.5">그 외 Supabase가 관리하는 컬럼</text>
+</g>
+<g aria-label="match_participants">
+<rect x="40" y="644" width="310" height="234" rx="8" fill="currentColor" fill-opacity="0.025" stroke="currentColor" stroke-opacity="0.42" stroke-width="1.2"/>
+<path d="M40 702 V652 Q40 644 48 644 H342 Q350 644 350 652 V702 Z" fill="currentColor" fill-opacity="0.06"/>
+<line x1="40" y1="702" x2="350" y2="702" stroke="currentColor" stroke-opacity="0.22"/>
+<text x="54" y="668" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="14.5" font-weight="600" fill="currentColor">match_participants</text>
+<rect x="54" y="676" width="70.2" height="18" rx="9" fill="#2f6fdb" fill-opacity="0.14" stroke="#2f6fdb" stroke-opacity="0.8"/>
+<text x="63" y="688.8" font-family="'IBM Plex Sans KR', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif" font-size="10.5" fill="currentColor" fill-opacity="0.86">서버만 기록</text>
+<text x="52" y="718" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.95">PK</text>
+<text x="68.5" y="718" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.6">FK</text>
+<text x="88" y="718" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">match_id</text>
+<text x="338" y="718" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">uuid</text>
+<line x1="50" y1="726" x2="340" y2="726" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="52" y="742" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.95">PK</text>
+<text x="68.5" y="742" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.6">FK</text>
+<text x="88" y="742" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">user_id</text>
+<text x="338" y="742" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">uuid</text>
+<rect x="41" y="750" width="308" height="24" fill="#c77700" fill-opacity="0.13"/>
+<rect x="41" y="753" width="3" height="18" rx="1" fill="#c77700"/>
+<line x1="50" y1="750" x2="340" y2="750" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="88" y="766" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">character_key</text>
+<text x="338" y="766" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">text</text>
+<line x1="50" y1="774" x2="340" y2="774" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="88" y="790" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">outcome</text>
+<text x="338" y="790" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">text?</text>
+<line x1="50" y1="798" x2="340" y2="798" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="88" y="814" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">streak_before</text>
+<text x="338" y="814" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">int?</text>
+<line x1="50" y1="822" x2="340" y2="822" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="88" y="838" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">streak_after</text>
+<text x="338" y="838" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">int?</text>
+<line x1="50" y1="846" x2="340" y2="846" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="88" y="862" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">final_hp</text>
+<text x="338" y="862" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">int?</text>
+</g>
+<g aria-label="matches">
+<rect x="440" y="644" width="310" height="330" rx="8" fill="currentColor" fill-opacity="0.025" stroke="currentColor" stroke-opacity="0.42" stroke-width="1.2"/>
+<path d="M440 702 V652 Q440 644 448 644 H742 Q750 644 750 652 V702 Z" fill="currentColor" fill-opacity="0.06"/>
+<line x1="440" y1="702" x2="750" y2="702" stroke="currentColor" stroke-opacity="0.22"/>
+<text x="454" y="668" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="14.5" font-weight="600" fill="currentColor">matches</text>
+<rect x="454" y="676" width="70.2" height="18" rx="9" fill="#2f6fdb" fill-opacity="0.14" stroke="#2f6fdb" stroke-opacity="0.8"/>
+<text x="463" y="688.8" font-family="'IBM Plex Sans KR', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif" font-size="10.5" fill="currentColor" fill-opacity="0.86">서버만 기록</text>
+<text x="452" y="718" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.95">PK</text>
+<text x="488" y="718" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">id</text>
+<text x="738" y="718" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">uuid</text>
+<line x1="450" y1="726" x2="740" y2="726" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="452" y="742" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.6">FK</text>
+<text x="488" y="742" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">player1_id</text>
+<text x="738" y="742" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">uuid</text>
+<line x1="450" y1="750" x2="740" y2="750" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="452" y="766" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.6">FK</text>
+<text x="488" y="766" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">player2_id</text>
+<text x="738" y="766" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">uuid</text>
+<line x1="450" y1="774" x2="740" y2="774" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="790" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">status</text>
+<text x="738" y="790" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">text</text>
+<line x1="450" y1="798" x2="740" y2="798" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="452" y="814" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.6">FK</text>
+<text x="488" y="814" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">winner_id</text>
+<text x="738" y="814" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">uuid?</text>
+<line x1="450" y1="822" x2="740" y2="822" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="838" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">reason</text>
+<text x="738" y="838" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">text?</text>
+<rect x="441" y="846" width="308" height="24" fill="#c77700" fill-opacity="0.13"/>
+<rect x="441" y="849" width="3" height="18" rx="1" fill="#c77700"/>
+<line x1="450" y1="846" x2="740" y2="846" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="862" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">created_at</text>
+<text x="738" y="862" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">timestamptz</text>
+<line x1="450" y1="870" x2="740" y2="870" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="886" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">started_at</text>
+<text x="738" y="886" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">timestamptz?</text>
+<line x1="450" y1="894" x2="740" y2="894" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="910" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">ended_at</text>
+<text x="738" y="910" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">timestamptz?</text>
+<line x1="450" y1="918" x2="740" y2="918" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="934" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">rules_version</text>
+<text x="738" y="934" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">text</text>
+<line x1="450" y1="942" x2="740" y2="942" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="488" y="958" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">server_instance_id</text>
+<text x="738" y="958" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">text</text>
+</g>
+<g aria-label="match_events">
+<rect x="840" y="644" width="310" height="210" rx="8" fill="currentColor" fill-opacity="0.025" stroke="currentColor" stroke-opacity="0.42" stroke-width="1.2"/>
+<path d="M840 702 V652 Q840 644 848 644 H1142 Q1150 644 1150 652 V702 Z" fill="currentColor" fill-opacity="0.06"/>
+<line x1="840" y1="702" x2="1150" y2="702" stroke="currentColor" stroke-opacity="0.22"/>
+<text x="854" y="668" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="14.5" font-weight="600" fill="currentColor">match_events</text>
+<rect x="854" y="676" width="70.2" height="18" rx="9" fill="#2f6fdb" fill-opacity="0.14" stroke="#2f6fdb" stroke-opacity="0.8"/>
+<text x="863" y="688.8" font-family="'IBM Plex Sans KR', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif" font-size="10.5" fill="currentColor" fill-opacity="0.86">서버만 기록</text>
+<rect x="841" y="702" width="308" height="24" fill="#c77700" fill-opacity="0.13"/>
+<rect x="841" y="705" width="3" height="18" rx="1" fill="#c77700"/>
+<text x="852" y="718" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.95">PK</text>
+<text x="888" y="718" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">id</text>
+<text x="1138" y="718" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">bigint</text>
+<rect x="841" y="726" width="308" height="24" fill="#c77700" fill-opacity="0.13"/>
+<rect x="841" y="729" width="3" height="18" rx="1" fill="#c77700"/>
+<line x1="850" y1="726" x2="1140" y2="726" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="852" y="742" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.6">FK</text>
+<text x="888" y="742" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">match_id</text>
+<text x="1138" y="742" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">uuid</text>
+<rect x="841" y="750" width="308" height="24" fill="#c77700" fill-opacity="0.13"/>
+<rect x="841" y="753" width="3" height="18" rx="1" fill="#c77700"/>
+<line x1="850" y1="750" x2="1140" y2="750" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="852" y="766" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="0.3" fill="currentColor" fill-opacity="0.6">FK</text>
+<text x="888" y="766" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">user_id</text>
+<text x="1138" y="766" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">uuid?</text>
+<rect x="841" y="774" width="308" height="24" fill="#c77700" fill-opacity="0.13"/>
+<rect x="841" y="777" width="3" height="18" rx="1" fill="#c77700"/>
+<line x1="850" y1="774" x2="1140" y2="774" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="888" y="790" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">event_type</text>
+<text x="1138" y="790" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">text</text>
+<rect x="841" y="798" width="308" height="24" fill="#c77700" fill-opacity="0.13"/>
+<rect x="841" y="801" width="3" height="18" rx="1" fill="#c77700"/>
+<line x1="850" y1="798" x2="1140" y2="798" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="888" y="814" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">payload</text>
+<text x="1138" y="814" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">jsonb?</text>
+<rect x="841" y="822" width="308" height="24" fill="#c77700" fill-opacity="0.13"/>
+<rect x="841" y="825" width="3" height="18" rx="1" fill="#c77700"/>
+<line x1="850" y1="822" x2="1140" y2="822" stroke="currentColor" stroke-opacity="0.08"/>
+<text x="888" y="838" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" fill="currentColor">occurred_at</text>
+<text x="1138" y="838" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="11" fill="currentColor" fill-opacity="0.6">timestamptz</text>
+</g>
+<path d="M440 398 L307 398 Q300 398 300 391 L300 227.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="433" y1="404" x2="433" y2="392" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="428" y1="404" x2="428" y2="392" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="306" y1="213" x2="294" y2="213" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="300" cy="223" r="4.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="300" y1="206" x2="300" y2="218.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="292" y="306" text-anchor="end" font-size="10.5" fill="currentColor" fill-opacity="0.68"><tspan font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace">user_id</tspan></text>
+<path d="M595 368 L595 299.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="589" y1="361" x2="601" y2="361" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="589" y1="356" x2="601" y2="356" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="601" y1="285" x2="589" y2="285" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="595" cy="295" r="4.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="595" y1="278" x2="595" y2="290.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="603" y="327" text-anchor="start" font-size="10.5" fill="currentColor" fill-opacity="0.68"><tspan font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace">user_id</tspan></text>
+<path d="M750 398 L883 398 Q890 398 890 391 L890 227.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="757" y1="392" x2="757" y2="404" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="762" y1="392" x2="762" y2="404" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="896" y1="213" x2="884" y2="213" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="890" cy="223" r="4.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="890" y1="206" x2="890" y2="218.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="898" y="306" text-anchor="start" font-size="10.5" fill="currentColor" fill-opacity="0.68"><tspan font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace">user_id</tspan></text>
+<path d="M440 524 L307 524 Q300 524 300 531 L300 618.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="433" y1="530" x2="433" y2="518" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="428" y1="530" x2="428" y2="518" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="300" y1="632" x2="293" y2="644" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="300" y1="632" x2="307" y2="644" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="300" cy="623" r="4.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="300" y1="644" x2="300" y2="627.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="292" y="588" text-anchor="end" font-size="10.5" fill="currentColor" fill-opacity="0.68"><tspan font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace">user_id</tspan></text>
+<path d="M771.5 524 L883 524 Q890 524 890 531 L890 618.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="757" y1="518" x2="757" y2="530" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="767" cy="524" r="4.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="750" y1="524" x2="762.5" y2="524" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="890" y1="632" x2="883" y2="644" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="890" y1="632" x2="897" y2="644" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="890" cy="623" r="4.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="890" y1="644" x2="890" y2="627.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="898" y="588" text-anchor="start" font-size="10.5" fill="currentColor" fill-opacity="0.68"><tspan font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace">user_id</tspan></text>
+<path d="M595 554 L595 618.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="601" y1="561" x2="589" y2="561" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="601" y1="566" x2="589" y2="566" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="595" y1="632" x2="588" y2="644" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="595" y1="632" x2="602" y2="644" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="595" cy="623" r="4.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="595" y1="644" x2="595" y2="627.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="603" y="603" text-anchor="start" font-size="10.5" fill="currentColor" fill-opacity="0.68"><tspan font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace">player1_id · player2_id · winner_id</tspan></text>
+<path d="M440 714 L350 714" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="433" y1="720" x2="433" y2="708" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="428" y1="720" x2="428" y2="708" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="362" y1="714" x2="350" y2="707" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="362" y1="714" x2="350" y2="721" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="366" y1="708" x2="366" y2="720" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="395" y="702" text-anchor="middle" font-size="10.5" fill="currentColor" fill-opacity="0.68"><tspan font-family="'IBM Plex Sans KR', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif">경기당 2행</tspan></text>
+<path d="M750 714 L788 714 Q795 714 795 721 L795 731 Q795 738 802 738 L814.5 738" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="757" y1="708" x2="757" y2="720" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="762" y1="708" x2="762" y2="720" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="828" y1="738" x2="840" y2="745" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="828" y1="738" x2="840" y2="731" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="819" cy="738" r="4.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="840" y1="738" x2="823.5" y2="738" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M680 995.5 L680 1001.8 Q680 1008 686.2 1008 L1178 1008 Q1185 1008 1185 1001 L1185 142.8 Q1185 138 1180.2 138 L1175.5 138" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5"/>
+<line x1="686" y1="981" x2="674" y2="981" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="680" cy="991" r="4.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="680" y1="974" x2="680" y2="986.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="1162" y1="138" x2="1150" y2="131" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="1162" y1="138" x2="1150" y2="145" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1171" cy="138" r="4.5" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="1150" y1="138" x2="1166.5" y2="138" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="932.5" y="1000" text-anchor="middle" font-size="10.5" fill="currentColor" fill-opacity="0.68"><tspan font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace">queue_or_match_id</tspan><tspan font-family="'IBM Plex Sans KR', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif"> → </tspan><tspan font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace">matches.id</tspan><tspan font-family="'IBM Plex Sans KR', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif">  ·  FK 없음</tspan></text>
+</g>
+</svg>

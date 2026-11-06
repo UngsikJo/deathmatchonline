@@ -1,6 +1,8 @@
-# Supabase 초기 스키마 초안
+# Supabase 스키마 준비와 연결 안내
 
 [초기 migration](../supabase/migrations/202611060001_initial_schema.sql)은 회원 프로필·통계·경기 테이블과 기본 RLS 정책의 출발점입니다. 아직 실제 Supabase에 적용하거나 실행 검증하지 않았습니다. 개발용 빈 프로젝트에서 먼저 검증하세요.
+
+사용자가 제공한 ERD를 반영한 [002 migration](../supabase/migrations/202611060002_align_erd.sql)을 추가했습니다. [DB 명세](DATABASE.md)에 테이블·관계·제약·개발 기본안을, [백엔드 준비서](BACKEND_IMPLEMENTATION_PLAN.md)에 구현 순서를 정리했습니다. 001→002는 폐기용 PostgreSQL 16에서 검증했습니다. 이 테스트의 Auth 스키마는 최소 모형이므로 실제 Supabase 인증 통합을 검증한 것은 아닙니다. 기존 경기·참가 기록이 있으면 002는 이관 계획을 요구하며 중단합니다.
 
 현재 게임 서버는 이 테이블에 쓰지 않습니다. Supabase를 연결해도 인증만 활성화되며 경기·연승 기록은 메모리에 남습니다.
 
@@ -35,3 +37,5 @@ cp apps/game-server/.env.example apps/game-server/.env
 5. 서버 전용 정산 함수를 별도 migration으로 추가한 뒤 실제 전적 저장을 연결합니다.
 
 정산 함수는 아직 없습니다. 브라우저에 통계 쓰기 권한을 주거나 service-role 키를 배포하여 우회하지 않습니다. 운영 DB에 적용하는 작업은 이 프로젝트 기초 생성 단계에 포함하지 않았습니다.
+
+스키마 자체 검사에는 `npm run test:db`를 사용합니다. 기존 DB 대신 임시 클러스터·Unix 소켓만 사용합니다. 별도로 실제 Supabase에서 Auth·RLS·RPC 검증이 필요합니다. 경기 기록이 있는 계정의 직접 삭제는 임시 `RESTRICT` 정책으로 막혀 있으므로 탈퇴 익명화를 준비하기 전 운영에 적용하지 않습니다.

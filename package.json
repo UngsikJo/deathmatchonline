@@ -19,6 +19,7 @@
     "pretest:watch": "npm run build -w @deathmatch/shared",
     "test:watch": "vitest",
     "test:integration": "npm run build -w @deathmatch/shared && tsx scripts/smoke.ts",
+    "test:db": "tsx scripts/test-database.ts",
     "check": "npm run typecheck && npm test && npm run build",
     "format": "prettier --write .",
     "format:check": "prettier --check ."

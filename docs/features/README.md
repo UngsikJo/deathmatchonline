@@ -2,6 +2,10 @@
 
 현재 로컬 프로토타입을 정식 MVP로 발전시키기 위한 기능 구분입니다. **이번 브랜치들은 기능 명세 작성용이며, 명세서 생성이 기능 구현 완료를 뜻하지 않습니다.** 기준 코드와 실제 구현 상태는 [루트 README](../../README.md)와 [개발 목록](../ROADMAP.md)을 함께 확인하세요.
 
+> 캐릭터 범위 변경 검수 중: 시작 캐릭터를 주먹·검·화살·마법 4종으로 확장합니다. [캐릭터 설정·스킬 초안](../CHARACTERS.md)이 최신 검수안이며 기존 기능 브랜치의 단일 캐릭터·공통 스킬 가정은 승인 후 동기화할 대상입니다. 사용자 요청에 따라 UI 목업과 참고 명세를 `feature/lobby-ui`에 공유합니다. 다른 기능 브랜치의 명세 동기화는 후속 작업입니다.
+
+> 조작·궁극기 변경: [공통 명세](../COMBAT_CONTROLS.md)의 A 유지 방어·S 대시·D 기본·F 다운 추가 공격·Q/W/E 기본 스킬·R 100% 게이지를 적용하는 안으로 변경합니다. 기존 명세의 A 기본 공격·D 대시·R 고정 쿨다운은 승인 후 교체할 대상입니다.
+
 ## 기능 목록
 
 각 명세서 링크는 해당 원격 기능 브랜치를 가리킵니다. `main`에는 이 목록을 두고, 각 브랜치에는 자기 기능의 명세서 한 개를 추가합니다.
@@ -21,7 +25,7 @@
 | F11 | 요청 검증·운영 보호       | `feature/security-operations` | [F11-security-operations.md](https://github.com/UngsikJo/deathmatchonline/blob/feature/security-operations/docs/features/F11-security-operations.md) | F01, F05, F06, F07      |
 | F12 | 환경 분리·배포·CI         | `feature/deployment`          | [F12-deployment.md](https://github.com/UngsikJo/deathmatchonline/blob/feature/deployment/docs/features/F12-deployment.md)                            | F01, F06~F11            |
 
-모든 기능은 최초 공개 MVP를 위한 P0 범위입니다. 문서에서 P1으로 표시한 키 재지정·소셜 로그인·친선전·다중 지역 등은 이 브랜치의 필수 완료 범위에서 제외합니다. 기존 임시 캐릭터를 유지할지 최종 에셋을 채택할지는 F10에서 검증합니다.
+모든 기능은 최초 공개 MVP를 위한 P0 범위입니다. 문서에서 P1으로 표시한 키 재지정·소셜 로그인·친선전·다중 지역 등은 이 브랜치의 필수 완료 범위에서 제외합니다. 시작 캐릭터 4종은 초기 범위이며 F10에서 4종의 시각적 구분과 실제 에셋을 검증합니다.
 
 ## 1인 개발 권장 순서
 

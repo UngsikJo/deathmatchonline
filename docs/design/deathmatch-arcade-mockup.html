@@ -1,0 +1,2200 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Press+Start+2P&display=swap');
+  #dm-arcade-review {
+    --dm-ink: #141921;
+    --dm-bg: #222a34;
+    --dm-panel: #303b48;
+    --dm-edge: #0f141c;
+    --dm-paper: #fff1cf;
+    --dm-muted: #bec9d5;
+    --dm-gold: #ffc54b;
+    --dm-teal: #71e0c4;
+    --dm-red: #ff7b75;
+    --dm-line: 4px;
+    color: var(--dm-paper);
+    font:
+      500 14px/1.5 'IBM Plex Sans KR',
+      sans-serif;
+    width: 100%;
+    color-scheme: dark;
+  }
+  #dm-arcade-review * {
+    box-sizing: border-box;
+  }
+  #dm-arcade-review [hidden] {
+    display: none !important;
+  }
+  #dm-arcade-review button,
+  #dm-arcade-review input,
+  #dm-arcade-review select {
+    font: inherit;
+  }
+  #dm-arcade-review button {
+    color: inherit;
+  }
+  #dm-arcade-review button:focus-visible,
+  #dm-arcade-review input:focus-visible,
+  #dm-arcade-review select:focus-visible {
+    outline: 3px solid var(--dm-teal);
+    outline-offset: 4px;
+  }
+  #dm-arcade-review h1,
+  #dm-arcade-review h2,
+  #dm-arcade-review h3,
+  #dm-arcade-review p {
+    margin: 0;
+  }
+  #dm-arcade-review .dm-reviewbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    background: var(--dm-ink);
+    padding: 12px 16px;
+    border-bottom: 1px solid #4b5663;
+  }
+  #dm-arcade-review .dm-review-label {
+    font-size: 11px;
+    color: var(--dm-muted);
+    letter-spacing: 1px;
+  }
+  #dm-arcade-review .dm-review-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  #dm-arcade-review .dm-review-tabs button {
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    padding: 6px 9px;
+    color: var(--dm-muted);
+  }
+  #dm-arcade-review .dm-review-tabs button[aria-selected='true'] {
+    border-color: var(--dm-gold);
+    color: var(--dm-gold);
+  }
+  #dm-arcade-review .dm-product {
+    position: relative;
+    background: var(--dm-bg);
+    overflow: hidden;
+    border: var(--dm-line) solid var(--dm-edge);
+  }
+  #dm-arcade-review .dm-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px 22px;
+    background: #1b232d;
+    border-bottom: var(--dm-line) solid var(--dm-edge);
+  }
+  #dm-arcade-review .dm-wordmark {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.6px;
+    line-height: 1.1;
+    color: var(--dm-gold);
+  }
+  #dm-arcade-review .dm-wordmark small {
+    font:
+      11px 'Press Start 2P',
+      monospace;
+    display: block;
+    color: var(--dm-paper);
+    letter-spacing: 3px;
+    margin-top: 6px;
+  }
+  #dm-arcade-review .dm-account {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+  }
+  #dm-arcade-review .dm-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: var(--dm-teal);
+    margin-right: 6px;
+  }
+  #dm-arcade-review .dm-button {
+    border: var(--dm-line) solid var(--dm-edge);
+    background: #465465;
+    padding: 10px 16px;
+    min-height: 44px;
+    box-shadow:
+      inset 0 3px #ffffff20,
+      0 4px var(--dm-edge);
+    font-weight: 700;
+  }
+  #dm-arcade-review .dm-button:hover:not(:disabled) {
+    filter: brightness(1.12);
+  }
+  #dm-arcade-review .dm-button:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow:
+      inset 0 2px #ffffff20,
+      0 1px var(--dm-edge);
+  }
+  #dm-arcade-review .dm-button:disabled {
+    opacity: 0.45;
+  }
+  #dm-arcade-review .dm-button.dm-primary {
+    background: var(--dm-gold);
+    color: var(--dm-ink);
+  }
+  #dm-arcade-review .dm-button.dm-teal {
+    background: var(--dm-teal);
+    color: var(--dm-ink);
+  }
+  #dm-arcade-review .dm-button.dm-danger {
+    background: #7d3d43;
+  }
+  #dm-arcade-review .dm-button.dm-small {
+    padding: 5px 10px;
+    min-height: 36px;
+    font-size: 12px;
+  }
+  #dm-arcade-review .dm-bricks {
+    background-color: #333b46;
+    background-image:
+      linear-gradient(335deg, #ffffff04 0 15%, transparent 15%),
+      linear-gradient(#161e2966 3px, transparent 3px),
+      linear-gradient(90deg, #161e2966 3px, transparent 3px);
+    background-size:
+      100% 100%,
+      100% 32px,
+      64px 64px;
+  }
+  #dm-arcade-review[data-bricks='off'] .dm-bricks {
+    background-image: none;
+  }
+  #dm-arcade-review .dm-lobby {
+    padding: 25px 28px 22px;
+  }
+  #dm-arcade-review .dm-eyebrow {
+    color: var(--dm-muted);
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 700;
+  }
+  #dm-arcade-review .dm-lobby-title {
+    text-align: center;
+    padding: 4px 0 15px;
+  }
+  #dm-arcade-review .dm-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: clamp(32px, 5vw, 58px);
+    line-height: 1.18;
+    font-weight: 400;
+    color: var(--dm-paper);
+    text-shadow: 3px 4px var(--dm-edge);
+  }
+  #dm-arcade-review .dm-title span {
+    color: var(--dm-gold);
+  }
+  #dm-arcade-review .dm-lobby-grid {
+    display: grid;
+    grid-template-columns: minmax(140px, 1fr) minmax(220px, 1.3fr) minmax(160px, 1fr);
+    align-items: center;
+    gap: 20px;
+  }
+  #dm-arcade-review .dm-record {
+    text-align: center;
+  }
+  #dm-arcade-review .dm-record-label {
+    font-size: 14px;
+    color: var(--dm-gold);
+  }
+  #dm-arcade-review .dm-record-num {
+    font:
+      clamp(42px, 7vw, 70px)/1.25 'Press Start 2P',
+      monospace;
+    color: var(--dm-gold);
+    text-shadow: 4px 5px #101721;
+    margin: 12px 0 9px;
+  }
+  #dm-arcade-review .dm-record-best {
+    border-top: 2px solid #728093;
+    padding-top: 14px;
+    margin-top: 16px;
+    color: var(--dm-muted);
+  }
+  #dm-arcade-review .dm-record-best strong {
+    color: var(--dm-paper);
+    font:
+      18px 'Press Start 2P',
+      monospace;
+    display: inline-block;
+    margin-left: 10px;
+  }
+  #dm-arcade-review .dm-character-stage {
+    position: relative;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 14px;
+  }
+  #dm-arcade-review .dm-halo {
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    top: 22px;
+    background: repeating-conic-gradient(from 10deg, #ffc54b08 0deg 15deg, transparent 15deg 30deg);
+    border-radius: 50%;
+  }
+  #dm-arcade-review .dm-character-stage canvas {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    image-rendering: pixelated;
+    z-index: 1;
+  }
+  #dm-arcade-review .dm-plinth {
+    position: absolute;
+    bottom: 43px;
+    width: 208px;
+    height: 38px;
+    background: #68727c;
+    border: 4px solid var(--dm-edge);
+    box-shadow:
+      inset 0 6px #b7b6a1,
+      0 9px #171f29;
+  }
+  #dm-arcade-review .dm-char-tag {
+    z-index: 2;
+    background: var(--dm-ink);
+    padding: 5px 15px;
+    border: 2px solid #7c8998;
+    font-weight: 700;
+  }
+  #dm-arcade-review .dm-quick-title {
+    font-size: 12px;
+    color: var(--dm-muted);
+    margin-bottom: 10px;
+  }
+  #dm-arcade-review .dm-quick-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+  #dm-arcade-review .dm-pick {
+    background: #25303c;
+    border: 3px solid var(--dm-edge);
+    padding: 8px;
+    min-height: 90px;
+    box-shadow: 0 3px var(--dm-edge);
+    text-align: center;
+  }
+  #dm-arcade-review .dm-pick[aria-pressed='true'] {
+    border-color: var(--dm-gold);
+    background: #49463c;
+  }
+  #dm-arcade-review .dm-pick canvas {
+    display: block;
+    margin: auto;
+    width: 52px;
+    height: 52px;
+    image-rendering: pixelated;
+  }
+  #dm-arcade-review .dm-pick span {
+    display: block;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  #dm-arcade-review .dm-lobby-actions {
+    max-width: 450px;
+    margin: 20px auto 0;
+    text-align: center;
+  }
+  #dm-arcade-review .dm-start {
+    width: 100%;
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    padding: 13px 16px;
+  }
+  #dm-arcade-review .dm-quiet {
+    color: var(--dm-muted);
+    font-size: 12px;
+    margin-top: 12px;
+  }
+  #dm-arcade-review .dm-bottomnav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 18px 20px;
+    background: #1e2732;
+    border-top: var(--dm-line) solid var(--dm-edge);
+  }
+  #dm-arcade-review .dm-keys-line {
+    color: var(--dm-muted);
+    text-align: center;
+    font-size: 12px;
+    padding: 10px 16px;
+    background: var(--dm-ink);
+  }
+  #dm-arcade-review kbd {
+    background: #4b596b;
+    color: var(--dm-paper);
+    border: 1px solid #8190a0;
+    border-bottom: 3px solid #111925;
+    border-radius: 0;
+    padding: 2px 5px;
+    font-family: monospace;
+    font-size: 12px;
+  }
+  #dm-arcade-review .dm-screen-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  #dm-arcade-review .dm-section-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-weight: 400;
+    font-size: 29px;
+  }
+  #dm-arcade-review .dm-selection {
+    padding: 26px;
+  }
+  #dm-arcade-review .dm-selection-grid {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 28px;
+  }
+  #dm-arcade-review .dm-selection .dm-character-stage {
+    min-height: 255px;
+  }
+  #dm-arcade-review .dm-style-label {
+    display: inline-block;
+    background: var(--dm-gold);
+    color: var(--dm-ink);
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  #dm-arcade-review .dm-detail-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 32px;
+    margin-top: 8px;
+  }
+  #dm-arcade-review .dm-description {
+    color: var(--dm-muted);
+    margin: 7px 0 14px;
+    max-width: 48ch;
+  }
+  #dm-arcade-review .dm-skill-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 16px;
+  }
+  #dm-arcade-review .dm-skill-description {
+    display: flex;
+    gap: 9px;
+    align-items: start;
+    padding: 9px 0;
+    border-bottom: 1px solid #617081;
+    font-size: 12px;
+  }
+  #dm-arcade-review .dm-skill-description strong {
+    display: block;
+    color: var(--dm-paper);
+    font-size: 13px;
+  }
+  #dm-arcade-review .dm-skill-description span {
+    color: var(--dm-muted);
+  }
+  #dm-arcade-review .dm-selection-picks {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 22px;
+  }
+  #dm-arcade-review .dm-selection-picks .dm-pick {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    min-height: 74px;
+  }
+  #dm-arcade-review .dm-selection-picks canvas {
+    width: 48px;
+    height: 48px;
+    margin: 0;
+  }
+  #dm-arcade-review .dm-selection-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 20px;
+  }
+  #dm-arcade-review .dm-selection-footer .dm-button {
+    min-width: 210px;
+  }
+  #dm-arcade-review .dm-battle {
+    padding: 18px;
+    background: #25303c;
+  }
+  #dm-arcade-review .dm-battle-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 100px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+  #dm-arcade-review .dm-player-name {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 5px;
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+  #dm-arcade-review .dm-player-name strong {
+    color: var(--dm-teal);
+  }
+  #dm-arcade-review .dm-opponent .dm-player-name strong {
+    color: var(--dm-red);
+  }
+  #dm-arcade-review .dm-meter {
+    height: 14px;
+    background: #101822;
+  }
+  #dm-arcade-review .dm-meter span {
+    display: block;
+    height: 100%;
+    background: var(--dm-teal);
+  }
+  #dm-arcade-review .dm-opponent .dm-meter span {
+    background: var(--dm-red);
+  }
+  #dm-arcade-review .dm-ult-mini {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    font-size: 11px;
+    margin-top: 6px;
+  }
+  #dm-arcade-review .dm-ult-mini .dm-meter {
+    flex: 1;
+    height: 6px;
+  }
+  #dm-arcade-review .dm-ult-mini .dm-meter span {
+    background: var(--dm-gold);
+  }
+  #dm-arcade-review .dm-timer {
+    text-align: center;
+    font:
+      20px/1.5 'Press Start 2P',
+      monospace;
+  }
+  #dm-arcade-review .dm-timer small {
+    display: block;
+    color: var(--dm-gold);
+    font:
+      11px 'IBM Plex Sans KR',
+      sans-serif;
+    margin-top: 4px;
+  }
+  #dm-arcade-review .dm-arena {
+    position: relative;
+    margin-top: 17px;
+    background: #37454e;
+    border: 4px solid var(--dm-edge);
+  }
+  #dm-arcade-review .dm-arena canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 960/350;
+    image-rendering: pixelated;
+  }
+  #dm-arcade-review .dm-arena-tag {
+    position: absolute;
+    padding: 3px 8px;
+    background: #111b26;
+    border: 2px solid var(--dm-teal);
+    font-size: 11px;
+    transform: translateX(-50%);
+  }
+  #dm-arcade-review .dm-arena-tag.dm-enemy-tag {
+    border-color: var(--dm-red);
+  }
+  #dm-arcade-review .dm-arena-status {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #101a26;
+    padding: 4px 9px;
+    font-size: 11px;
+    color: var(--dm-gold);
+  }
+  #dm-arcade-review .dm-battle-bottom {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 210px;
+    gap: 20px;
+    margin-top: 17px;
+    align-items: center;
+  }
+  #dm-arcade-review .dm-hotbar {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 7px;
+  }
+  #dm-arcade-review .dm-skill {
+    min-height: 61px;
+    background: #3f4d5e;
+    border: 3px solid var(--dm-edge);
+    box-shadow: 0 3px var(--dm-edge);
+    text-align: left;
+    padding: 6px 9px;
+    position: relative;
+  }
+  #dm-arcade-review .dm-skill kbd {
+    display: inline-block;
+    min-width: 24px;
+    text-align: center;
+    font-weight: 700;
+    padding: 0 4px;
+    font-size: 14px;
+  }
+  #dm-arcade-review .dm-skill small {
+    display: block;
+    font-size: 11px;
+    color: var(--dm-muted);
+    margin-top: 4px;
+    white-space: normal;
+  }
+  #dm-arcade-review .dm-skill .dm-skill-state {
+    position: absolute;
+    top: 9px;
+    right: 8px;
+    color: var(--dm-muted);
+    font-size: 10px;
+  }
+  #dm-arcade-review .dm-skill:disabled {
+    background: #293541;
+    color: #8c9aab;
+    box-shadow: none;
+  }
+  #dm-arcade-review .dm-skill.dm-ready {
+    border-color: var(--dm-gold);
+    background: #58503a;
+  }
+  #dm-arcade-review .dm-skill.dm-ready .dm-skill-state {
+    color: var(--dm-gold);
+  }
+  #dm-arcade-review .dm-ultimate-panel {
+    padding: 12px;
+    border: 3px solid var(--dm-edge);
+    background: #1e2936;
+  }
+  #dm-arcade-review .dm-ultimate-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  #dm-arcade-review .dm-ultimate-heading strong {
+    color: var(--dm-gold);
+    font:
+      17px 'Press Start 2P',
+      monospace;
+  }
+  #dm-arcade-review .dm-ultimate-panel .dm-meter span {
+    background: var(--dm-gold);
+  }
+  #dm-arcade-review .dm-ultimate-panel p {
+    font-size: 11px;
+    color: var(--dm-muted);
+    margin-top: 8px;
+  }
+  #dm-arcade-review .dm-battle-message {
+    min-height: 35px;
+    color: var(--dm-gold);
+    font-size: 12px;
+    padding-top: 10px;
+  }
+  #dm-arcade-review .dm-battle-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid #5b6979;
+    padding-top: 12px;
+    color: var(--dm-muted);
+    font-size: 11px;
+  }
+  #dm-arcade-review .dm-result {
+    padding: 34px 26px;
+    text-align: center;
+    min-height: 530px;
+  }
+  #dm-arcade-review .dm-result-banner {
+    color: var(--dm-gold);
+    font:
+      clamp(25px, 4.8vw, 43px)/1.5 'Press Start 2P',
+      monospace;
+    text-shadow: 4px 4px #0f141c;
+    margin-top: 7px;
+  }
+  #dm-arcade-review .dm-result-stage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 18px 0 5px;
+  }
+  #dm-arcade-review .dm-result-stage canvas {
+    width: 130px;
+    height: 130px;
+    image-rendering: pixelated;
+  }
+  #dm-arcade-review .dm-result-score {
+    text-align: left;
+  }
+  #dm-arcade-review .dm-result-score strong {
+    display: block;
+    color: var(--dm-gold);
+    font:
+      clamp(36px, 6vw, 60px)/1.5 'Press Start 2P',
+      monospace;
+  }
+  #dm-arcade-review .dm-result-score span {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 22px;
+  }
+  #dm-arcade-review .dm-result-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 9px 24px;
+    color: var(--dm-muted);
+    font-size: 12px;
+    margin: 12px 0 22px;
+  }
+  #dm-arcade-review .dm-result-actions {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 12px;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+  #dm-arcade-review .dm-result-actions .dm-button {
+    font-size: 18px;
+    min-height: 58px;
+  }
+  #dm-arcade-review .dm-auto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 22px;
+    font-size: 12px;
+    color: var(--dm-muted);
+  }
+  #dm-arcade-review .dm-auto input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--dm-gold);
+  }
+  #dm-arcade-review .dm-auth {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 38px;
+    align-items: center;
+    min-height: 530px;
+  }
+  #dm-arcade-review .dm-auth-art {
+    text-align: center;
+  }
+  #dm-arcade-review .dm-auth-art canvas {
+    width: 180px;
+    height: 180px;
+    image-rendering: pixelated;
+    margin-top: 22px;
+  }
+  #dm-arcade-review .dm-auth-form {
+    padding: 24px;
+    background: #25303d;
+    border: 4px solid var(--dm-edge);
+    box-shadow: 7px 7px #141c25;
+  }
+  #dm-arcade-review .dm-auth-tabs {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  #dm-arcade-review .dm-auth-tabs button {
+    background: none;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    padding: 0 0 8px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dm-muted);
+  }
+  #dm-arcade-review .dm-auth-tabs button[aria-pressed='true'] {
+    color: var(--dm-gold);
+    border-color: var(--dm-gold);
+  }
+  #dm-arcade-review .dm-field {
+    display: block;
+    margin-bottom: 14px;
+    font-size: 12px;
+  }
+  #dm-arcade-review .dm-field input {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px;
+    margin-top: 6px;
+    background: #141e2a;
+    border: 2px solid #778391;
+    border-radius: 0;
+    color: var(--dm-paper);
+    font-size: 16px;
+  }
+  #dm-arcade-review .dm-auth-form .dm-button {
+    width: 100%;
+    margin-top: 8px;
+  }
+  #dm-arcade-review .dm-review-state {
+    background: var(--dm-ink);
+    padding: 12px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--dm-muted);
+  }
+  #dm-arcade-review .dm-review-state label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #dm-arcade-review .dm-review-state select {
+    background: #303c4b;
+    color: var(--dm-paper);
+    border: 1px solid #7b8796;
+    padding: 5px;
+    min-height: 32px;
+  }
+  #dm-arcade-review .dm-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0e1628e8;
+    z-index: 10;
+    padding: 22px;
+  }
+  #dm-arcade-review .dm-dialog {
+    background: #354151;
+    border: 4px solid var(--dm-edge);
+    box-shadow:
+      0 0 0 3px #919ba3,
+      8px 10px #080f1c;
+    padding: 30px;
+    max-width: 430px;
+    width: 100%;
+    text-align: center;
+  }
+  #dm-arcade-review .dm-dialog h2 {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 26px;
+    margin-bottom: 14px;
+    font-weight: 400;
+  }
+  #dm-arcade-review .dm-dialog p {
+    color: var(--dm-muted);
+    margin-bottom: 20px;
+  }
+  #dm-arcade-review .dm-dialog .dm-button {
+    margin: 5px;
+  }
+  #dm-arcade-review .dm-match-num {
+    font:
+      42px 'Press Start 2P',
+      monospace;
+    color: var(--dm-gold);
+    margin: 25px 0;
+  }
+  #dm-arcade-review .dm-dialog-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  @media (max-width: 760px) {
+    #dm-arcade-review .dm-lobby {
+      padding: 20px;
+    }
+    #dm-arcade-review .dm-lobby-grid {
+      grid-template-columns: 1fr 1.2fr;
+      gap: 15px;
+    }
+    #dm-arcade-review .dm-lobby-picks {
+      grid-column: 1/-1;
+    }
+    #dm-arcade-review .dm-quick-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    #dm-arcade-review .dm-pick {
+      min-height: 82px;
+    }
+    #dm-arcade-review .dm-quick-title {
+      display: none;
+    }
+    #dm-arcade-review .dm-selection-grid {
+      grid-template-columns: 160px minmax(0, 1fr);
+      gap: 18px;
+    }
+    #dm-arcade-review .dm-selection .dm-character-stage canvas {
+      width: 155px;
+      height: 155px;
+    }
+    #dm-arcade-review .dm-selection .dm-plinth {
+      width: 150px;
+    }
+    #dm-arcade-review .dm-selection .dm-halo {
+      width: 150px;
+      height: 150px;
+    }
+    #dm-arcade-review .dm-battle-bottom {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 13px;
+    }
+    #dm-arcade-review .dm-ultimate-panel {
+      display: grid;
+      grid-template-columns: 160px minmax(0, 1fr);
+      align-items: center;
+      gap: 4px 14px;
+    }
+    #dm-arcade-review .dm-ultimate-heading {
+      margin: 0;
+    }
+    #dm-arcade-review .dm-ultimate-panel p {
+      grid-column: 1/-1;
+      margin: 0;
+    }
+    #dm-arcade-review .dm-auth {
+      gap: 20px;
+      padding: 25px;
+    }
+  }
+  @media (max-width: 520px) {
+    #dm-arcade-review .dm-reviewbar {
+      gap: 7px;
+      padding: 10px;
+    }
+    #dm-arcade-review .dm-review-tabs {
+      gap: 1px;
+    }
+    #dm-arcade-review .dm-review-tabs button {
+      padding: 5px 8px;
+      font-size: 12px;
+      min-height: 36px;
+    }
+    #dm-arcade-review .dm-header {
+      padding: 12px;
+      gap: 10px;
+    }
+    #dm-arcade-review .dm-wordmark {
+      font-size: 18px;
+    }
+    #dm-arcade-review .dm-account {
+      font-size: 11px;
+      gap: 8px;
+    }
+    #dm-arcade-review .dm-lobby {
+      padding: 19px 12px;
+    }
+    #dm-arcade-review .dm-lobby-title {
+      padding-bottom: 6px;
+    }
+    #dm-arcade-review .dm-lobby-grid {
+      gap: 8px;
+      grid-template-columns: 1fr 1.1fr;
+    }
+    #dm-arcade-review .dm-character-stage {
+      min-height: 205px;
+    }
+    #dm-arcade-review .dm-character-stage canvas {
+      width: 150px;
+      height: 150px;
+    }
+    #dm-arcade-review .dm-halo {
+      width: 140px;
+      height: 140px;
+      top: 25px;
+    }
+    #dm-arcade-review .dm-plinth {
+      width: 135px;
+      height: 30px;
+      bottom: 42px;
+    }
+    #dm-arcade-review .dm-record-num {
+      font-size: 40px;
+    }
+    #dm-arcade-review .dm-record-best strong {
+      font-size: 13px;
+      margin-left: 4px;
+    }
+    #dm-arcade-review .dm-record-label {
+      font-size: 12px;
+    }
+    #dm-arcade-review .dm-record-best {
+      font-size: 11px;
+    }
+    #dm-arcade-review .dm-quick-grid {
+      gap: 6px;
+    }
+    #dm-arcade-review .dm-pick {
+      padding: 5px;
+      min-height: 74px;
+    }
+    #dm-arcade-review .dm-pick canvas {
+      width: 42px;
+      height: 42px;
+    }
+    #dm-arcade-review .dm-bottomnav {
+      gap: 8px;
+      padding: 14px 9px;
+    }
+    #dm-arcade-review .dm-bottomnav .dm-button {
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+    #dm-arcade-review .dm-selection {
+      padding: 20px 13px;
+    }
+    #dm-arcade-review .dm-selection-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    #dm-arcade-review .dm-selection .dm-character-stage {
+      min-height: 200px;
+    }
+    #dm-arcade-review .dm-selection .dm-halo {
+      top: 8px;
+    }
+    #dm-arcade-review .dm-selection-picks {
+      gap: 6px;
+      margin-top: 17px;
+    }
+    #dm-arcade-review .dm-selection-picks .dm-pick {
+      display: block;
+      min-height: 78px;
+    }
+    #dm-arcade-review .dm-selection-picks canvas {
+      margin: auto;
+      width: 38px;
+      height: 38px;
+    }
+    #dm-arcade-review .dm-selection-footer .dm-button {
+      width: 100%;
+    }
+    #dm-arcade-review .dm-battle {
+      padding: 12px 8px;
+    }
+    #dm-arcade-review .dm-battle-top {
+      grid-template-columns: minmax(0, 1fr) 62px minmax(0, 1fr);
+      gap: 8px;
+    }
+    #dm-arcade-review .dm-timer {
+      font-size: 13px;
+      padding-top: 5px;
+    }
+    #dm-arcade-review .dm-player-name {
+      font-size: 11px;
+    }
+    #dm-arcade-review .dm-arena canvas {
+      aspect-ratio: 1.3;
+    }
+    #dm-arcade-review .dm-arena-tag {
+      font-size: 11px;
+      padding: 2px 4px;
+    }
+    #dm-arcade-review .dm-skill {
+      padding: 5px;
+      min-height: 64px;
+    }
+    #dm-arcade-review .dm-skill .dm-skill-state {
+      right: 5px;
+      font-size: 10px;
+    }
+    #dm-arcade-review .dm-skill small {
+      font-size: 11px;
+    }
+    #dm-arcade-review .dm-result {
+      padding: 28px 15px;
+      min-height: 520px;
+    }
+    #dm-arcade-review .dm-result-stage {
+      gap: 15px;
+    }
+    #dm-arcade-review .dm-result-stage canvas {
+      width: 100px;
+      height: 100px;
+    }
+    #dm-arcade-review .dm-result-score strong {
+      font-size: 41px;
+    }
+    #dm-arcade-review .dm-result-actions {
+      gap: 8px;
+    }
+    #dm-arcade-review .dm-result-actions .dm-button {
+      padding: 10px 6px;
+      font-size: 16px;
+    }
+    #dm-arcade-review .dm-auth {
+      grid-template-columns: 1fr;
+      padding: 24px 16px;
+      gap: 20px;
+    }
+    #dm-arcade-review .dm-auth-art canvas {
+      display: none;
+    }
+    #dm-arcade-review .dm-auth-form {
+      padding: 20px;
+    }
+    #dm-arcade-review .dm-dialog {
+      padding: 20px 14px;
+    }
+  }
+</style>
+<div
+  id="dm-arcade-review"
+  lang="ko"
+  aria-label="Deathmatch Online 아케이드 디자인 검수"
+  data-bricks="on"
+>
+  <div class="dm-reviewbar">
+    <span class="dm-review-label">DESIGN REVIEW / 도트 아케이드</span>
+    <div class="dm-review-tabs" role="tablist" aria-label="목업 화면">
+      <button
+        type="button"
+        class="cursor-interaction"
+        id="dm-tab-lobby"
+        role="tab"
+        aria-controls="dm-screen-lobby"
+        aria-selected="true"
+        data-screen="lobby"
+      >
+        로비
+      </button>
+      <button
+        type="button"
+        class="cursor-interaction"
+        id="dm-tab-characters"
+        role="tab"
+        aria-controls="dm-screen-characters"
+        aria-selected="false"
+        data-screen="characters"
+      >
+        캐릭터
+      </button>
+      <button
+        type="button"
+        class="cursor-interaction"
+        id="dm-tab-battle"
+        role="tab"
+        aria-controls="dm-screen-battle"
+        aria-selected="false"
+        data-screen="battle"
+      >
+        전투
+      </button>
+      <button
+        type="button"
+        class="cursor-interaction"
+        id="dm-tab-result"
+        role="tab"
+        aria-controls="dm-screen-result"
+        aria-selected="false"
+        data-screen="result"
+      >
+        결과
+      </button>
+      <button
+        type="button"
+        class="cursor-interaction"
+        id="dm-tab-auth"
+        role="tab"
+        aria-controls="dm-screen-auth"
+        aria-selected="false"
+        data-screen="auth"
+      >
+        로그인
+      </button>
+    </div>
+  </div>
+  <div class="dm-product">
+    <header class="dm-header">
+      <div class="dm-wordmark">DEATHMATCH<small>ONLINE</small></div>
+      <div class="dm-account">
+        <span><span class="dm-dot"></span>도전자_01</span
+        ><button type="button" class="dm-button dm-small cursor-interaction" data-action="settings">
+          설정
+        </button>
+      </div>
+    </header>
+    <section id="dm-screen-lobby" role="tabpanel" aria-labelledby="dm-tab-lobby">
+      <div class="dm-lobby dm-bricks">
+        <div class="dm-lobby-title">
+          <div class="dm-eyebrow">1 VS 1 · STREAK DEATHMATCH</div>
+          <h1 class="dm-title">다음 한 판도, <span>승리.</span></h1>
+        </div>
+        <div class="dm-lobby-grid">
+          <div class="dm-record">
+            <div class="dm-record-label">현재 연승</div>
+            <div class="dm-record-num" data-current-streak>03</div>
+            <div>승리의 흐름을 이어가세요</div>
+            <div class="dm-record-best">나의 최고 연승 <strong>12</strong></div>
+          </div>
+          <div class="dm-character-stage">
+            <div class="dm-halo" aria-hidden="true"></div>
+            <canvas
+              width="256"
+              height="256"
+              data-avatar="selected"
+              role="img"
+              aria-label="선택한 캐릭터 도트 초안"
+            ></canvas>
+            <div class="dm-plinth" aria-hidden="true"></div>
+            <div class="dm-char-tag" data-character-name>검형</div>
+          </div>
+          <div class="dm-lobby-picks">
+            <div class="dm-quick-title">이번 판의 캐릭터</div>
+            <div class="dm-quick-grid" data-picker="quick"></div>
+          </div>
+        </div>
+        <div class="dm-lobby-actions">
+          <button
+            type="button"
+            class="dm-button dm-primary dm-start cursor-interaction"
+            data-action="match"
+          >
+            대전 시작　▶
+          </button>
+          <p class="dm-quiet">경기 사이에는 언제든 쉬어도 연승이 유지됩니다.</p>
+          <div data-pending-result hidden>
+            <p class="dm-quiet">이전 경기 결과를 확인해야 다음 대전을 시작할 수 있습니다.</p>
+            <button type="button" class="dm-button cursor-interaction" data-action="result">
+              결과 저장 확인
+            </button>
+          </div>
+        </div>
+      </div>
+      <nav class="dm-bottomnav" aria-label="로비 메뉴">
+        <button type="button" class="dm-button cursor-interaction" data-action="characters">
+          캐릭터 선택</button
+        ><button type="button" class="dm-button cursor-interaction" data-action="ranking">
+          최고 연승 순위</button
+        ><button type="button" class="dm-button cursor-interaction" data-action="controls">
+          조작 안내
+        </button>
+      </nav>
+      <div class="dm-keys-line">
+        <kbd>↑↓←→</kbd> 이동　 <kbd>A S D F</kbd> 공통 행동　 <kbd>Q W E R</kbd> 기술
+      </div>
+    </section>
+    <section id="dm-screen-characters" role="tabpanel" aria-labelledby="dm-tab-characters" hidden>
+      <div class="dm-selection dm-bricks">
+        <div class="dm-screen-head">
+          <h2 class="dm-section-title">캐릭터 선택</h2>
+          <span class="dm-eyebrow">처음부터 4종 모두 선택 가능</span>
+        </div>
+        <div class="dm-selection-grid">
+          <div class="dm-character-stage">
+            <div class="dm-halo" aria-hidden="true"></div>
+            <canvas
+              width="256"
+              height="256"
+              data-avatar="selected"
+              role="img"
+              aria-label="캐릭터 외형 도트 초안"
+            ></canvas>
+            <div class="dm-plinth" aria-hidden="true"></div>
+            <div class="dm-char-tag">정식 이름 미정</div>
+          </div>
+          <div>
+            <span class="dm-style-label" data-style-label>간격 · 받아치기</span>
+            <h3 class="dm-detail-title" data-character-name>검형</h3>
+            <p class="dm-description" data-description></p>
+            <div class="dm-skill-list" data-skill-list></div>
+          </div>
+        </div>
+        <div class="dm-selection-picks" data-picker="selection"></div>
+        <div class="dm-selection-footer">
+          <span class="dm-quiet">체력·이동 속도는 같고, 전투 방식이 다릅니다.</span
+          ><button
+            type="button"
+            class="dm-button dm-primary cursor-interaction"
+            data-action="choose"
+          >
+            이 캐릭터로 도전
+          </button>
+        </div>
+      </div>
+    </section>
+    <section id="dm-screen-battle" role="tabpanel" aria-labelledby="dm-tab-battle" hidden>
+      <div class="dm-battle">
+        <div class="dm-battle-top">
+          <div>
+            <div class="dm-player-name">
+              <strong>나 · <span data-character-name>검형</span></strong
+              ><span data-my-hp>72 / 100</span>
+            </div>
+            <div
+              class="dm-meter"
+              role="meter"
+              aria-label="내 체력"
+              data-my-hp-meter
+              aria-valuenow="72"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              <span style="width: 72%"></span>
+            </div>
+            <div class="dm-ult-mini">
+              궁극기
+              <div class="dm-meter"><span data-charge-fill style="width: 68%"></span></div>
+              <span data-charge-text>68%</span>
+            </div>
+          </div>
+          <div class="dm-timer">
+            <span data-battle-time>01:24</span><small data-battle-streak>현재 3연승</small>
+          </div>
+          <div class="dm-opponent">
+            <div class="dm-player-name">
+              <strong>상대 · 활형</strong><span data-enemy-hp>38 / 100</span>
+            </div>
+            <div
+              class="dm-meter"
+              role="meter"
+              aria-label="상대 체력"
+              data-enemy-hp-meter
+              aria-valuenow="38"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              <span style="width: 38%"></span>
+            </div>
+            <div class="dm-ult-mini">
+              궁극기
+              <div class="dm-meter"><span data-enemy-charge-fill style="width: 42%"></span></div>
+              <span data-enemy-charge>42%</span>
+            </div>
+          </div>
+        </div>
+        <div class="dm-arena">
+          <canvas
+            id="dm-arena-canvas"
+            width="960"
+            height="350"
+            role="img"
+            aria-label="엄폐물이 있는 탑다운 도트 경기장, 내 캐릭터와 상대 활형"
+          ></canvas
+          ><span class="dm-arena-status" data-arena-status>1 VS 1 · 전투 중</span
+          ><span class="dm-arena-tag" style="left: 36%; top: 34%">나</span
+          ><span class="dm-arena-tag dm-enemy-tag" style="left: 64%; top: 26%" data-enemy-tag
+            >상대</span
+          >
+        </div>
+        <div class="dm-battle-bottom">
+          <div class="dm-hotbar" data-hotbar></div>
+          <div class="dm-ultimate-panel">
+            <div class="dm-ultimate-heading">
+              궁극기 게이지 <strong data-charge-text>68%</strong>
+            </div>
+            <div
+              class="dm-meter"
+              role="meter"
+              aria-label="내 궁극기 게이지"
+              aria-valuenow="68"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              data-charge-meter
+            >
+              <span data-charge-fill style="width: 68%"></span>
+            </div>
+            <p data-ultimate-hint>공격을 맞히거나 피해를 받으면 충전됩니다.</p>
+          </div>
+        </div>
+        <div class="dm-battle-message" data-battle-message role="status" aria-live="polite">
+          R은 100%일 때 사용 가능 · F는 다운 상대만 공격
+        </div>
+        <div class="dm-battle-footer">
+          <span><kbd>↑↓←→</kbd> 이동　 <kbd>A</kbd> 누르고 방어</span
+          ><span
+            ><span class="dm-dot"></span><span data-connection>연결 정상</span>　<button
+              type="button"
+              class="dm-button dm-small cursor-interaction"
+              data-action="surrender"
+            >
+              기권 / 메뉴
+            </button></span
+          >
+        </div>
+      </div>
+    </section>
+    <section id="dm-screen-result" role="tabpanel" aria-labelledby="dm-tab-result" hidden>
+      <div class="dm-result dm-bricks">
+        <div class="dm-eyebrow">경기 종료 · <span data-result-record>기록 저장 완료</span></div>
+        <h2 class="dm-result-banner" data-result-banner>VICTORY!</h2>
+        <div class="dm-result-stage">
+          <canvas
+            width="256"
+            height="256"
+            data-avatar="selected"
+            role="img"
+            aria-label="경기 결과의 내 캐릭터"
+          ></canvas>
+          <div class="dm-result-score">
+            <strong data-result-score>04</strong><span data-result-label>연승 달성!</span>
+          </div>
+        </div>
+        <p data-result-copy>좋은 흐름이에요. 다음 상대에게 도전할까요?</p>
+        <div class="dm-result-meta">
+          <span>대전 시간 00:46</span><span>사용 캐릭터 <b data-character-name>검형</b></span
+          ><span>최고 연승 12</span>
+        </div>
+        <div class="dm-result-actions">
+          <button
+            type="button"
+            class="dm-button dm-primary cursor-interaction"
+            data-action="continue"
+            data-continue
+          >
+            계속 도전 ▶</button
+          ><button type="button" class="dm-button cursor-interaction" data-action="rest">
+            쉬기
+          </button>
+        </div>
+        <p class="dm-quiet" data-result-note>
+          쉬어도 4연승은 유지됩니다. 경기 도중 나가면 패배합니다.
+        </p>
+        <label class="dm-auto"
+          ><input type="checkbox" data-auto />승리 후 5초 뒤 자동으로 다음 대전 찾기</label
+        >
+        <p class="dm-quiet" data-auto-state role="status" aria-live="polite"></p>
+      </div>
+    </section>
+    <section id="dm-screen-auth" role="tabpanel" aria-labelledby="dm-tab-auth" hidden>
+      <div class="dm-auth dm-bricks">
+        <div class="dm-auth-art">
+          <div class="dm-eyebrow">한 판의 승리, 끝없는 도전</div>
+          <h2 class="dm-title">당신의 <span>최고 연승</span>은?</h2>
+          <canvas
+            width="256"
+            height="256"
+            data-avatar="selected"
+            role="img"
+            aria-label="대전을 준비하는 캐릭터"
+          ></canvas>
+        </div>
+        <form class="dm-auth-form" data-auth-form>
+          <div class="dm-auth-tabs">
+            <button
+              type="button"
+              class="cursor-interaction"
+              data-auth-mode="login"
+              aria-pressed="true"
+            >
+              로그인</button
+            ><button
+              type="button"
+              class="cursor-interaction"
+              data-auth-mode="register"
+              aria-pressed="false"
+            >
+              회원가입
+            </button>
+          </div>
+          <label class="dm-field" data-nickname-field hidden
+            >닉네임<input
+              type="text"
+              maxlength="16"
+              placeholder="경기에서 사용할 이름"
+              autocomplete="off"
+              data-nickname /></label
+          ><label class="dm-field"
+            >이메일<input
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="off"
+              required /></label
+          ><label class="dm-field"
+            >비밀번호<input
+              type="password"
+              placeholder="비밀번호 입력"
+              autocomplete="off"
+              minlength="8"
+              required /></label
+          ><button type="submit" class="dm-button dm-primary cursor-interaction" data-auth-submit>
+            로그인</button
+          ><button type="button" class="dm-button cursor-interaction" data-action="guest">
+            게스트로 체험하기
+          </button>
+          <p class="dm-quiet" data-auth-note>계정으로 로그인하면 연승 기록을 이어갈 수 있습니다.</p>
+          <p class="dm-quiet" role="status" aria-live="polite" data-auth-feedback></p>
+        </form>
+      </div>
+    </section>
+    <div class="dm-overlay" data-overlay hidden>
+      <div
+        class="dm-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-label="게임 안내"
+        data-dialog
+      ></div>
+    </div>
+  </div>
+  <div class="dm-review-state">
+    <span>검수용 목업 · 기록·접속 상태는 예시</span
+    ><label data-scenario-control hidden
+      >전투 상태
+      <select data-scenario aria-label="전투 상태 검수">
+        <option value="normal">일반 전투</option>
+        <option value="down">상대 다운 · F 가능</option>
+        <option value="ready">궁극기 100% · R 가능</option>
+        <option value="recovering">내 캐릭터 기상 중</option>
+        <option value="offline">재접속 중</option>
+      </select></label
+    ><label data-result-control hidden
+      >결과 상태
+      <select data-result-scenario aria-label="결과 상태 검수">
+        <option value="win">승리 · 4연승</option>
+        <option value="loss">패배 · 연승 종료</option>
+        <option value="draw">무승부 · 연승 종료</option>
+        <option value="saving">결과 저장 중</option>
+        <option value="save-error">저장 실패 · 재시도</option>
+      </select></label
+    >
+  </div>
+</div>
+<script>
+  (() => {
+    const root = document.getElementById('dm-arcade-review');
+    const find = (selector) => root.querySelector(selector);
+    const all = (selector) => [...root.querySelectorAll(selector)];
+    const types = {
+      brawler: {
+        name: '주먹형',
+        color: '#79bdd6',
+        dark: '#2e6d8c',
+        style: '근접 · 압박',
+        description: '빈틈을 보고 파고들어 짧고 빠른 주먹을 이어갑니다.',
+        skills: {
+          A: ['웅크려 막기', '누르고 유지 · 정면 방어'],
+          S: ['전진 대시', '바라보는 방향으로 돌진'],
+          D: ['잽', '가까운 상대에게 빠른 한 방'],
+          F: ['파운딩', '쓰러진 상대에게 추가 타격'],
+          Q: ['전진 정권', '전진하며 강한 주먹'],
+          W: ['지면 강타', '주변 지면 공격 · A 방어 불가'],
+          E: ['다리 걸기', '유효 적중 시 상대 다운'],
+          R: ['전력 연타', '100% 소비 · 강력한 3연타'],
+        },
+      },
+      sword: {
+        name: '검형',
+        color: '#e1806e',
+        dark: '#904b51',
+        style: '간격 · 받아치기',
+        description: '칼끝의 간격을 유지하고 상대의 빈틈을 정확히 베어냅니다.',
+        skills: {
+          A: ['웅크려 막기', '누르고 유지 · 정면 방어'],
+          S: ['보법 대시', '바라보는 방향으로 이동'],
+          D: ['가로 베기', '전방에 검격 한 번'],
+          F: ['다운 베기', '쓰러진 상대에게 추가 검격'],
+          Q: ['찌르기', '긴 직선 공격 · 유효 적중 시 다운'],
+          W: ['흘려막기', '정면 타격 1회 무효'],
+          E: ['짧은 검기', '검기를 날려 원거리 견제'],
+          R: ['일섬', '100% 소비 · 예고 후 직선 검격'],
+        },
+      },
+      archer: {
+        name: '활형',
+        color: '#87bf82',
+        dark: '#3b755f',
+        style: '원거리 · 기동',
+        description: '거리를 만들고 화살을 정확히 맞혀 상대의 접근을 끊습니다.',
+        skills: {
+          A: ['웅크려 막기', '누르고 유지 · 정면 방어'],
+          S: ['기동 대시', '바라보는 방향으로 이동'],
+          D: ['빠른 사격', '화살 한 발로 견제'],
+          F: ['다운 사격', '쓰러진 상대에게 추가 사격'],
+          Q: ['산개 사격', '세 방향으로 화살 발사'],
+          W: ['둔화 화살', '명중 시 상대 이동 둔화'],
+          E: ['넘어뜨리는 화살', '유효 적중 시 상대 다운'],
+          R: ['결정 화살', '100% 소비 · 긴 사거리의 강한 한 발'],
+        },
+      },
+      mage: {
+        name: '마법형',
+        color: '#ba9be5',
+        dark: '#6c528c',
+        style: '마법 · 영역 제어',
+        description: '예고한 영역으로 이동을 유도하고 강한 마법으로 마무리합니다.',
+        skills: {
+          A: ['웅크려 막기', '누르고 유지 · 정면 방어'],
+          S: ['마력 대시', '바라보는 방향으로 이동'],
+          D: ['마력탄', '마력탄 한 발 발사'],
+          F: ['다운 파동', '쓰러진 상대에게 추가 마법'],
+          Q: ['폭발진', '지면 폭발 · 유효 적중 시 다운'],
+          W: ['마력 보호막', '들어오는 피해 흡수'],
+          E: ['둔화 지대', '영역 안의 상대 이동 둔화'],
+          R: ['집중 광선', '100% 소비 · 예고 후 긴 직선 마법'],
+        },
+      },
+    };
+    const saved = window.openai?.widgetState?.modelContent;
+    const state = {
+      character: types[saved?.character] ? saved.character : 'sword',
+      screen: ['lobby', 'characters', 'battle', 'result', 'auth'].includes(saved?.screen)
+        ? saved.screen
+        : 'lobby',
+      scenario: 'normal',
+      charge: 68,
+      myHp: 72,
+      enemyHp: 38,
+      enemyCharge: 42,
+      time: '01:24',
+      streak: 3,
+      result: 'win',
+      auth: 'login',
+      auto: false,
+      autoLeft: 5,
+    };
+    let timers = [],
+      autoTimer,
+      beforeDialog;
+    const design = { accent: '#ffc54b', border: 4, bricks: true };
+    const persist = () => {
+      if (window.openai?.setWidgetState)
+        Promise.resolve(
+          window.openai.setWidgetState({
+            modelContent: {
+              character: state.character,
+              screen: state.screen,
+              design: '도트 아케이드',
+            },
+            privateContent: null,
+          }),
+        ).catch(() => {});
+    };
+    function clearTimers() {
+      timers.forEach(clearTimeout);
+      timers = [];
+    }
+    function stopAuto() {
+      clearTimeout(autoTimer);
+      autoTimer = undefined;
+    }
+    function rect(ctx, x, y, w, h, color) {
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, w, h);
+    }
+    function person(ctx, kind, x, y, size, down = false, mirror = false) {
+      const t = types[kind];
+      ctx.save();
+      ctx.translate(Math.round(x), Math.round(y));
+      ctx.scale(mirror ? -size : size, size);
+      if (down) {
+        ctx.translate(-8, 10);
+        ctx.rotate(-Math.PI / 2);
+      }
+      const r = (a, b, c, d, col) => rect(ctx, a, b, c, d, col);
+      r(-9, 12, 18, 3, '#17232b88');
+      r(-5, -12, 10, 9, '#17202a');
+      r(-4, -11, 8, 7, '#edbd91');
+      r(-4, -12, 8, 3, '#4c3734');
+      r(-5, -10, 2, 4, '#4c3734');
+      r(2, -7, 1, 1, '#1b2630');
+      r(4, -8, 2, 3, '#edbd91');
+      r(-2, -4, 5, 2, '#c88f69');
+      r(-6, -3, 12, 11, '#15232e');
+      r(-5, -3, 10, 9, t.dark);
+      r(-4, -3, 8, 4, t.color);
+      r(-4, 6, 9, 2, '#d1b581');
+      r(-5, 8, 4, 5, '#24313e');
+      r(2, 8, 4, 5, '#24313e');
+      r(-6, 12, 5, 2, '#111c27');
+      r(2, 12, 6, 2, '#111c27');
+      r(-8, -1, 3, 7, t.color);
+      r(5, -1, 3, 7, t.color);
+      r(-8, 5, 3, 3, '#edbd91');
+      r(5, 5, 3, 3, '#edbd91');
+      if (kind === 'brawler') {
+        r(-10, 3, 5, 5, '#e6e0c5');
+        r(5, 2, 5, 5, '#e6e0c5');
+        r(-4, -11, 9, 2, t.color);
+        r(-6, -10, 2, 5, t.color);
+      }
+      if (kind === 'sword') {
+        r(7, -6, 3, 11, '#111d28');
+        r(8, -9, 2, 12, '#e0e9df');
+        r(9, -10, 1, 12, '#9fb9bc');
+        r(5, 2, 7, 2, '#e3b153');
+        r(8, 4, 2, 4, '#654637');
+        r(-5, -2, 3, 5, '#9faeb5');
+        r(3, -2, 3, 5, '#9faeb5');
+      }
+      if (kind === 'archer') {
+        r(-6, -12, 11, 4, t.dark);
+        r(-4, -14, 8, 3, t.color);
+        r(8, -9, 2, 3, '#d5a169');
+        r(10, -6, 2, 12, '#d5a169');
+        r(8, 6, 2, 3, '#d5a169');
+        r(8, -6, 1, 12, '#e5ddbf');
+        r(6, 0, 8, 1, '#decfa2');
+        r(13, -1, 2, 3, '#edf0d0');
+        r(-10, -6, 2, 12, '#75523c');
+      }
+      if (kind === 'mage') {
+        r(-7, -4, 14, 13, t.dark);
+        r(-6, 7, 13, 3, t.color);
+        r(-7, -12, 14, 2, t.color);
+        r(-5, -15, 10, 3, t.dark);
+        r(-3, -18, 7, 4, t.color);
+        r(0, -20, 4, 3, t.color);
+        r(9, -8, 2, 22, '#b99a69');
+        r(7, -11, 6, 5, '#7bd7d0');
+        r(8, -12, 4, 7, '#7bd7d0');
+        r(9, -11, 2, 3, '#dbf7dc');
+        r(-1, 0, 2, 2, '#f2ce69');
+      }
+      ctx.restore();
+    }
+    function drawAvatars() {
+      all('[data-avatar]').forEach((canvas) => {
+        const c = canvas.getContext('2d');
+        c.clearRect(0, 0, canvas.width, canvas.height);
+        person(
+          c,
+          canvas.dataset.avatar === 'selected' ? state.character : canvas.dataset.avatar,
+          128,
+          139,
+          6,
+        );
+      });
+    }
+    function renderPickers() {
+      all('[data-picker]').forEach((el) => {
+        el.innerHTML = Object.entries(types)
+          .map(
+            ([id, t]) =>
+              `<button type="button" class="dm-pick cursor-interaction" data-character="${id}" aria-pressed="${state.character === id}"><canvas width="256" height="256" data-avatar="${id}" aria-hidden="true"></canvas><span>${t.name}${state.character === id ? ' ✓' : ''}</span></button>`,
+          )
+          .join('');
+      });
+    }
+    function renderCharacter() {
+      const t = types[state.character];
+      all('[data-character-name]').forEach((x) => (x.textContent = t.name));
+      find('[data-style-label]').textContent = t.style;
+      find('[data-description]').textContent = t.description;
+      find('[data-skill-list]').innerHTML = Object.entries(t.skills)
+        .map(
+          ([key, skill]) =>
+            `<div class="dm-skill-description"><kbd>${key}</kbd><div><strong>${skill[0]}</strong><span>${skill[1]}</span></div></div>`,
+        )
+        .join('');
+      renderPickers();
+      drawAvatars();
+      renderBattle();
+    }
+    function drawArena() {
+      const canvas = find('#dm-arena-canvas'),
+        ctx = canvas.getContext('2d');
+      if (canvas.clientWidth) {
+        canvas.width = Math.round(canvas.clientWidth);
+        canvas.height = Math.round(canvas.clientHeight);
+      }
+      const w = canvas.width,
+        h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+      rect(ctx, 0, 0, w, h, '#192731');
+      for (let y = 20; y < h - 20; y += 32)
+        for (let x = 20; x < w - 20; x += 32) {
+          rect(
+            ctx,
+            x,
+            y,
+            30,
+            30,
+            (Math.floor(x / 32) + Math.floor(y / 32)) % 2 ? '#506067' : '#4a5962',
+          );
+          rect(ctx, x + 4, y + 5, 3, 2, '#687980');
+        }
+      for (let x = 0; x < w; x += 40) {
+        rect(ctx, x + 1, 1, 38, 17, '#85918d');
+        rect(ctx, x + 1, h - 18, 38, 17, '#626e73');
+      }
+      for (let y = 20; y < h - 20; y += 30) {
+        rect(ctx, 1, y, 17, 28, '#727f80');
+        rect(ctx, w - 18, y, 17, 28, '#727f80');
+      }
+      const factor = Math.max(0.55, Math.min(1, w / 960));
+      const crate = (x, y) => {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.scale(factor, factor);
+        rect(ctx, 6, 8, 96, 50, '#1a2a35');
+        rect(ctx, 0, 0, 96, 46, '#1e2c38');
+        rect(ctx, 4, 4, 88, 35, '#78878a');
+        rect(ctx, 4, 4, 88, 6, '#a5b0a5');
+        rect(ctx, 10, 15, 76, 3, '#566971');
+        rect(ctx, 45, 7, 4, 31, '#566971');
+        ctx.restore();
+      };
+      crate(w * 0.2, h * 0.25);
+      crate(w * 0.7, h * 0.65);
+      rect(ctx, w * 0.49, h * 0.43, 45 * factor, 45 * factor, '#627578');
+      rect(ctx, w * 0.49 + 4, h * 0.43 + 4, 37 * factor, 37 * factor, '#495d64');
+      const down = state.scenario === 'down',
+        near = down ? 0.44 : 0.64;
+      const size = 3.6 * factor,
+        meX = w * 0.36,
+        meY = h * 0.59;
+      rect(ctx, meX - 20 * factor, meY + 19 * factor, 40 * factor, 4, '#71e0c4');
+      person(ctx, state.character, meX, meY, size, false, false);
+      person(ctx, 'archer', w * near, h * 0.46, size, down, true);
+      if (state.charge === 100) {
+        ctx.strokeStyle = design.accent;
+        ctx.lineWidth = 3;
+        ctx.strokeRect(meX - 45 * factor, meY - 58 * factor, 89 * factor, 112 * factor);
+      }
+      if (state.scenario === 'recovering') {
+        rect(ctx, meX - 45 * factor, meY - 58 * factor, 89 * factor, 112 * factor, '#d9edc426');
+      }
+      find('[data-enemy-tag]').style.left = `${near * 100}%`;
+      find('.dm-arena-tag:not(.dm-enemy-tag)').style.top =
+        `${((meY - (state.character === 'mage' ? 20 : 14) * size - 26) / h) * 100}%`;
+      find('[data-enemy-tag]').style.top = `${((h * 0.46 - 14 * size - 26) / h) * 100}%`;
+    }
+    function renderBattle() {
+      const t = types[state.character],
+        locked = ['recovering', 'offline'].includes(state.scenario);
+      all('[data-charge-text]').forEach((x) => (x.textContent = state.charge + '%'));
+      all('[data-charge-fill]').forEach((x) => (x.style.width = state.charge + '%'));
+      find('[data-charge-meter]').setAttribute('aria-valuenow', state.charge);
+      find('[data-my-hp]').textContent = `${state.myHp} / 100`;
+      find('[data-enemy-hp]').textContent = `${state.enemyHp} / 100`;
+      for (const [side, value] of [
+        ['my', state.myHp],
+        ['enemy', state.enemyHp],
+      ]) {
+        const meter = find(`[data-${side}-hp-meter]`);
+        meter.setAttribute('aria-valuenow', value);
+        meter.firstElementChild.style.width = `${value}%`;
+      }
+      find('[data-battle-time]').textContent = state.time;
+      find('[data-enemy-charge]').textContent = `${state.enemyCharge}%`;
+      find('[data-enemy-charge-fill]').style.width = `${state.enemyCharge}%`;
+      find('[data-hotbar]').innerHTML = ['Q', 'W', 'E', 'R', 'A', 'S', 'D', 'F']
+        .map((key) => {
+          const ready =
+            key === 'R' ? state.charge === 100 : key === 'F' ? state.scenario === 'down' : false;
+          const unavailable =
+            locked ||
+            (key === 'F' && state.scenario !== 'down') ||
+            (key === 'R' && state.charge < 100);
+          let hint =
+            key === 'R'
+              ? state.charge + '%'
+              : key === 'F'
+                ? ready
+                  ? '가능'
+                  : '다운만'
+                : key === 'A'
+                  ? '유지'
+                  : '준비';
+          return `<button type="button" class="dm-skill cursor-interaction ${ready && !locked ? 'dm-ready' : ''}" data-skill="${key}" ${unavailable ? 'disabled' : ''} aria-label="${key} ${t.skills[key][0]} ${hint}"><kbd>${key}</kbd><span class="dm-skill-state">${hint}</span><small>${t.skills[key][0]}</small></button>`;
+        })
+        .join('');
+      find('[data-arena-status]').textContent =
+        state.scenario === 'down'
+          ? '상대 다운 · F 추가 공격 가능'
+          : state.scenario === 'recovering'
+            ? '기상 중 · 잠시 행동 불가'
+            : state.scenario === 'offline'
+              ? '재접속 중 · 경기는 계속됩니다'
+              : state.charge === 100
+                ? '궁극기 준비 완료 · R'
+                : '1 VS 1 · 전투 중';
+      find('[data-enemy-tag]').textContent = state.scenario === 'down' ? '상대 · 다운' : '상대';
+      find('[data-connection]').textContent =
+        state.scenario === 'offline' ? '재접속 시도 중' : '연결 정상';
+      find('[data-ultimate-hint]').textContent = locked
+        ? '현재 행동 제한 중 · 게이지는 유지됩니다.'
+        : state.charge === 100
+          ? 'R을 눌러 사용 · 게이지 전부 소비'
+          : '공격을 맞히거나 피해를 받으면 충전됩니다.';
+      drawArena();
+    }
+    function renderResult() {
+      const r = state.result,
+        losing = r === 'loss' || r === 'draw',
+        blocked = r === 'saving' || r === 'save-error';
+      find('[data-result-banner]').textContent =
+        r === 'loss' ? 'DEFEAT' : r === 'draw' ? 'DRAW' : 'VICTORY!';
+      find('[data-result-score]').textContent = blocked ? '--' : losing ? '03' : '04';
+      find('[data-result-label]').textContent = blocked
+        ? '기록 확인 중'
+        : losing
+          ? '연승 종료'
+          : '연승 달성!';
+      find('[data-result-copy]').textContent =
+        r === 'loss'
+          ? '아쉽지만, 새로운 기록은 다음 한 판부터.'
+          : r === 'draw'
+            ? '승부를 가리지 못해 이번 연승이 종료됐습니다.'
+            : blocked
+              ? r === 'save-error'
+                ? '저장을 확인하지 못했습니다. 다시 확인해 주세요.'
+                : '경기 결과를 저장하고 있습니다.'
+              : '좋은 흐름이에요. 다음 상대에게 도전할까요?';
+      find('[data-result-record]').textContent =
+        r === 'saving'
+          ? '결과 저장 중…'
+          : r === 'save-error'
+            ? '저장 실패 · 기록 확인 필요'
+            : '기록 저장 완료';
+      find('[data-continue]').disabled = blocked;
+      find('[data-continue]').textContent = losing
+        ? '다시 도전 ▶'
+        : blocked
+          ? '저장 확인 대기'
+          : '계속 도전 ▶';
+      find('[data-result-note]').textContent = losing
+        ? '나의 최고 연승 12는 그대로 유지됩니다.'
+        : blocked
+          ? '결과 저장이 확인되면 다음 대전을 시작할 수 있습니다.'
+          : '쉬어도 4연승은 유지됩니다. 경기 도중 나가면 패배합니다.';
+      find('[data-auto]').disabled = losing || blocked;
+      find('[data-auto-state]').innerHTML =
+        r === 'save-error'
+          ? '<button type="button" class="dm-button dm-small cursor-interaction" data-action="retry-save">저장 다시 확인</button>'
+          : '';
+    }
+    function showScreen(screen, save = true) {
+      closeDialog(false);
+      stopAuto();
+      state.screen = screen;
+      find('.dm-account > span').hidden = screen === 'auth';
+      find('[data-action="match"]').disabled = ['saving', 'save-error'].includes(state.result);
+      find('[data-pending-result]').hidden = !['saving', 'save-error'].includes(state.result);
+      all('[data-screen]').forEach((b) =>
+        b.setAttribute('aria-selected', b.dataset.screen === screen),
+      );
+      all('[role=tabpanel]').forEach((p) => (p.hidden = p.id !== `dm-screen-${screen}`));
+      find('[data-scenario-control]').hidden = screen !== 'battle';
+      find('[data-result-control]').hidden = screen !== 'result';
+      find('[data-auto]').checked = false;
+      state.auto = false;
+      all('[data-current-streak]').forEach(
+        (x) => (x.textContent = String(state.streak).padStart(2, '0')),
+      );
+      find('[data-battle-streak]').textContent = `현재 ${state.streak}연승`;
+      if (screen === 'battle') renderBattle();
+      if (screen === 'result') renderResult();
+      if (save) persist();
+    }
+    function dialog(html) {
+      clearTimers();
+      beforeDialog = document.activeElement;
+      const overlay = find('[data-overlay]');
+      overlay.hidden = false;
+      const box = find('[data-dialog]');
+      box.innerHTML = html;
+      all('[role=tabpanel]').forEach((p) => (p.inert = true));
+      find('.dm-header').inert = true;
+      box.querySelector('button')?.focus();
+    }
+    function closeDialog(restore = true) {
+      clearTimers();
+      find('[data-overlay]').hidden = true;
+      all('[role=tabpanel]').forEach((p) => (p.inert = false));
+      find('.dm-header').inert = false;
+      if (restore && beforeDialog?.isConnected) beforeDialog.focus();
+    }
+    function startMatch() {
+      stopAuto();
+      if (['saving', 'save-error'].includes(state.result)) {
+        dialog(
+          '<h2>결과 저장 확인이 필요해요</h2><p>이전 경기 기록이 확인되면 다음 대전을 시작할 수 있습니다.</p><button type="button" class="dm-button dm-primary cursor-interaction" data-action="retry-save">저장 다시 확인</button><button type="button" class="dm-button cursor-interaction" data-action="close">닫기</button>',
+        );
+        return;
+      }
+      dialog(
+        `<h2>상대를 찾고 있어요</h2><div class="dm-match-num">VS</div><p>${types[state.character].name} · 1:1 데스매치<br>연승을 이어갈 다음 상대를 찾습니다.</p><button type="button" class="dm-button cursor-interaction" data-action="close">매칭 취소</button>`,
+      );
+      timers.push(
+        setTimeout(() => {
+          find('[data-dialog]').innerHTML =
+            `<h2>상대 발견!</h2><p>${types[state.character].name}　VS　활형</p><div class="dm-match-num" data-countdown>3</div><p>잠시 후 전투를 시작합니다.</p><button type="button" class="dm-button cursor-interaction" data-action="close">준비 취소</button>`;
+          find('[data-dialog] button').focus();
+          for (let i = 1; i <= 3; i++)
+            timers.push(
+              setTimeout(() => {
+                if (i < 3) find('[data-countdown]').textContent = 3 - i;
+                else {
+                  state.scenario = 'normal';
+                  state.charge = 0;
+                  state.myHp = state.enemyHp = 100;
+                  state.enemyCharge = 0;
+                  state.time = '02:00';
+                  find('[data-scenario]').value = 'normal';
+                  showScreen('battle');
+                }
+              }, i * 1000),
+            );
+        }, 1200),
+      );
+    }
+    function autoStep() {
+      if (!state.auto || state.screen !== 'result') return;
+      find('[data-auto-state]').textContent =
+        `${state.autoLeft}초 뒤 다음 상대를 찾습니다. 체크를 해제하면 취소됩니다.`;
+      autoTimer = setTimeout(() => {
+        state.autoLeft--;
+        if (state.autoLeft <= 0) {
+          state.streak = 4;
+          startMatch();
+        } else autoStep();
+      }, 1000);
+    }
+    root.addEventListener('click', (event) => {
+      const tab = event.target.closest('[data-screen]');
+      if (tab) {
+        showScreen(tab.dataset.screen);
+        return;
+      }
+      const pick = event.target.closest('[data-character]');
+      if (pick) {
+        state.character = pick.dataset.character;
+        renderCharacter();
+        persist();
+        return;
+      }
+      const mode = event.target.closest('[data-auth-mode]');
+      if (mode) {
+        state.auth = mode.dataset.authMode;
+        all('[data-auth-mode]').forEach((b) => b.setAttribute('aria-pressed', b === mode));
+        find('[data-nickname-field]').hidden = state.auth !== 'register';
+        find('[data-nickname]').required = state.auth === 'register';
+        find('[data-auth-submit]').textContent =
+          state.auth === 'register' ? '가입하고 시작하기' : '로그인';
+        find('[data-auth-feedback]').textContent = '';
+        return;
+      }
+      const skill = event.target.closest('[data-skill]');
+      if (skill && !skill.disabled) {
+        const key = skill.dataset.skill;
+        find('[data-battle-message]').textContent =
+          `${key} · ${types[state.character].skills[key][0]} — ${types[state.character].skills[key][1]}`;
+        if (key === 'R') {
+          state.charge = 0;
+          state.scenario = 'normal';
+          find('[data-scenario]').value = 'normal';
+          renderBattle();
+        } else if (key === 'F') {
+          state.scenario = 'normal';
+          const damage = state.character === 'sword' || state.character === 'brawler' ? 12 : 10;
+          state.enemyHp = Math.max(0, state.enemyHp - damage);
+          state.charge = Math.min(100, state.charge + damage * 2);
+          find('[data-scenario]').value = 'normal';
+          renderBattle();
+          find('[data-battle-message]').textContent =
+            '추가 공격 적중 · 상대 기상 전환 · 궁극기 게이지 충전';
+        }
+        return;
+      }
+      const action = event.target.closest('[data-action]')?.dataset.action;
+      if (!action) return;
+      if (action === 'close') {
+        closeDialog();
+        return;
+      }
+      if (action === 'match' || action === 'continue') {
+        state.streak =
+          state.result === 'loss' || state.result === 'draw'
+            ? 0
+            : state.screen === 'result'
+              ? 4
+              : state.streak;
+        startMatch();
+        return;
+      }
+      if (action === 'characters') {
+        showScreen('characters');
+        return;
+      }
+      if (action === 'result') {
+        showScreen('result');
+        return;
+      }
+      if (action === 'choose') {
+        showScreen('lobby');
+        return;
+      }
+      if (action === 'rest') {
+        if (!['saving', 'save-error'].includes(state.result))
+          state.streak = state.result === 'loss' || state.result === 'draw' ? 0 : 4;
+        showScreen('lobby');
+        return;
+      }
+      if (action === 'guest') {
+        showScreen('lobby');
+        return;
+      }
+      if (action === 'retry-save') {
+        state.result = 'win';
+        find('[data-result-scenario]').value = 'win';
+        closeDialog();
+        find('[data-action="match"]').disabled = false;
+        renderResult();
+        return;
+      }
+      if (action === 'settings') {
+        dialog(
+          '<h2>설정</h2><p>효과음과 움직임 표시를 조절하세요.</p><label class="dm-auto"><input type="checkbox" checked>효과음 켜기</label><label class="dm-auto"><input type="checkbox">화면 흔들림 줄이기</label><button type="button" class="dm-button dm-primary cursor-interaction" data-action="close">완료</button>',
+        );
+        return;
+      }
+      if (action === 'controls') {
+        dialog(
+          '<h2>조작 안내</h2><p>↑↓←→ 이동 · 마지막 이동 방향으로 조준<br><br>A 누르고 웅크려 막기<br>S 대시 · D 기본 공격<br>F 쓰러진 상대 추가 공격<br>Q/W/E 기본 스킬 · R 궁극기<br><br>궁극기는 공격·피격으로 충전되며<br>100%에서 R을 눌러 사용합니다.</p><button type="button" class="dm-button dm-primary cursor-interaction" data-action="close">알겠어요</button>',
+        );
+        return;
+      }
+      if (action === 'ranking') {
+        dialog(
+          '<h2>최고 연승 순위</h2><p>1위　도전자_A　　　24연승<br>2위　도전자_B　　　18연승<br>3위　도전자_C　　　15연승<br><br>나의 최고 기록　12연승</p><button type="button" class="dm-button cursor-interaction" data-action="close">닫기</button>',
+        );
+        return;
+      }
+      if (action === 'surrender') {
+        dialog(
+          '<h2>경기를 그만둘까요?</h2><p>메뉴를 열어도 경기는 계속됩니다.<br>기권하면 패배 처리되고 현재 연승이 종료됩니다.</p><div class="dm-dialog-row"><button type="button" class="dm-button dm-primary cursor-interaction" data-action="close">계속 싸우기</button><button type="button" class="dm-button dm-danger cursor-interaction" data-action="confirm-surrender">기권하기</button></div>',
+        );
+        return;
+      }
+      if (action === 'confirm-surrender') {
+        state.result = 'loss';
+        find('[data-result-scenario]').value = 'loss';
+        showScreen('result');
+      }
+    });
+    root.addEventListener('change', (event) => {
+      if (event.target.matches('[data-scenario]')) {
+        state.scenario = event.target.value;
+        state.charge = state.scenario === 'ready' ? 100 : 68;
+        state.myHp = 72;
+        state.enemyHp = 38;
+        state.enemyCharge = 42;
+        state.time = '01:24';
+        find('[data-battle-message]').textContent =
+          state.scenario === 'recovering'
+            ? '기상 중 · 모든 행동이 잠시 잠깁니다.'
+            : state.scenario === 'offline'
+              ? '재접속 중에도 경기 시간은 흐릅니다.'
+              : 'R은 100%일 때 사용 가능 · F는 다운 상대만 공격';
+        renderBattle();
+      }
+      if (event.target.matches('[data-result-scenario]')) {
+        stopAuto();
+        state.auto = false;
+        find('[data-auto]').checked = false;
+        state.result = event.target.value;
+        renderResult();
+      }
+      if (event.target.matches('[data-auto]')) {
+        stopAuto();
+        state.auto = event.target.checked;
+        state.autoLeft = 5;
+        if (state.auto) autoStep();
+        else find('[data-auto-state]').textContent = '자동 매칭을 취소했습니다.';
+      }
+    });
+    root.addEventListener('keydown', (event) => {
+      if (!find('[data-overlay]').hidden) {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          closeDialog();
+        } else if (event.key === 'Tab') {
+          const items = [...find('[data-dialog]').querySelectorAll('button,input,select')].filter(
+            (x) => !x.disabled,
+          );
+          if (!items.length) return;
+          if (event.shiftKey && document.activeElement === items[0]) {
+            event.preventDefault();
+            items.at(-1).focus();
+          } else if (!event.shiftKey && document.activeElement === items.at(-1)) {
+            event.preventDefault();
+            items[0].focus();
+          }
+        }
+      }
+    });
+    find('[data-auth-form]').addEventListener('submit', (event) => {
+      event.preventDefault();
+      find('[data-auth-feedback]').textContent =
+        state.auth === 'register'
+          ? '목업 확인: 이메일 인증 안내를 표시할 위치입니다. 실제 가입은 진행되지 않습니다.'
+          : '목업 확인: 실제 로그인은 진행되지 않습니다. 게스트 체험으로 화면을 확인하세요.';
+    });
+    function renderDesign() {
+      root.style.setProperty('--dm-gold', design.accent);
+      root.style.setProperty('--dm-line', design.border + 'px');
+      root.dataset.bricks = design.bricks ? 'on' : 'off';
+      drawArena();
+    }
+    renderCharacter();
+    showScreen(state.screen, false);
+    if (globalThis.ResizeObserver)
+      new ResizeObserver(() => drawArena()).observe(find('#dm-arena-canvas'));
+    if (globalThis.Tweak) {
+      const tweak = new Tweak({ container: root, onChange: renderDesign });
+      tweak.addColorPicker(design, 'accent', { label: '주 강조색', reference: '--dm-gold' });
+      tweak.addSlider(design, 'border', {
+        label: '버튼 테두리',
+        min: 2,
+        max: 5,
+        step: 1,
+        unit: 'px',
+      });
+      tweak.addToggle(design, 'bricks', { label: '벽돌 배경' });
+    }
+    window.addEventListener('openai:set_globals', (event) => {
+      const incoming = event.detail?.globals?.widgetState?.modelContent;
+      if (types[incoming?.character]) {
+        state.character = incoming.character;
+        renderCharacter();
+      }
+      if (['lobby', 'characters', 'battle', 'result', 'auth'].includes(incoming?.screen))
+        showScreen(incoming.screen, false);
+    });
+  })();
+</script>

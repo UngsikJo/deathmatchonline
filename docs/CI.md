@@ -19,7 +19,7 @@ npm run test:integration
 mkdir -p .github/workflows
 mv docs/ci.yml.example .github/workflows/ci.yml
 git add .github/workflows/ci.yml docs/ci.yml.example
-git commit -m "ci: enable project checks"
+git commit -m "ci: 프로젝트 자동 검사 활성화"
 git push
 ```
 

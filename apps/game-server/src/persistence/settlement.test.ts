@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import type { MatchResult } from '@deathmatch/shared';
 import type { ParticipantIdentity } from './contracts.js';
-import { makeSettlementCommand, normalizeNickname, toPlayerStats } from './settlement.js';
+import {
+  isDatabaseUuid,
+  makeSettlementCommand,
+  normalizeNickname,
+  toPlayerStats,
+} from './settlement.js';
 
 const matchId = '10000000-0000-0000-0000-000000000001';
 const players: [ParticipantIdentity, ParticipantIdentity] = [
@@ -31,9 +36,10 @@ describe('영구 정산 경계 계약', () => {
   });
   it('무승부와 서버 장애 무효를 구분한다', () => {
     expect(
-      makeSettlementCommand(matchId, players, { winnerId: null, reason: 'draw' }).participants.map(
-        (p) => p.outcome,
-      ),
+      makeSettlementCommand(matchId, [{ ...players[0], finalHp: 0 }, players[1]], {
+        winnerId: null,
+        reason: 'draw',
+      }).participants.map((p) => p.outcome),
     ).toEqual(['draw', 'draw']);
     const command = makeSettlementCommand(
       matchId,
@@ -116,5 +122,83 @@ describe('영구 정산 경계 계약', () => {
     });
     expect(() => toPlayerStats({ ...row, best_streak: 2 })).toThrow();
     expect(() => toPlayerStats({ ...row, wins: -1 })).toThrow();
+  });
+  it('같은 UUID의 대소문자 차이로 중복 계정을 통과시키지 않는다', () => {
+    const userId = 'aa000000-0000-0000-0000-000000000001';
+    expect(() =>
+      makeSettlementCommand(
+        matchId,
+        [
+          { ...players[0], userId },
+          { ...players[1], userId: userId.toUpperCase() },
+        ],
+        { winnerId: 'session-a', reason: 'ko' },
+      ),
+    ).toThrow(/두 계정/);
+  });
+  it('UUID를 소문자로 반환하고 입력 객체는 변경하지 않는다', () => {
+    const first = { ...players[0], userId: 'AA000000-0000-0000-0000-000000000001' };
+    const second = { ...players[1], userId: 'BB000000-0000-0000-0000-000000000002' };
+    const command = makeSettlementCommand('CC000000-0000-0000-0000-000000000003', [first, second], {
+      winnerId: 'session-a',
+      reason: 'ko',
+    });
+    expect(command.matchId).toBe('cc000000-0000-0000-0000-000000000003');
+    expect(command.winnerUserId).toBe(first.userId.toLowerCase());
+    expect(command.participants.map((p) => p.userId)).toEqual([
+      first.userId.toLowerCase(),
+      second.userId.toLowerCase(),
+    ]);
+    expect(first.userId).toMatch(/^AA/);
+    expect(isDatabaseUuid({ toString: () => first.userId })).toBe(false);
+  });
+  it.each([
+    { reason: 'ko', winnerId: 'session-a', a: 0, b: 60 },
+    { reason: 'ko', winnerId: 'session-a', a: 60, b: 10 },
+    { reason: 'ko', winnerId: null, a: 0, b: 10 },
+    { reason: 'timeout', winnerId: 'session-a', a: 60, b: 70 },
+    { reason: 'timeout', winnerId: 'session-a', a: 60, b: 60 },
+    { reason: 'timeout', winnerId: null, a: 60, b: 0 },
+    { reason: 'draw', winnerId: null, a: 60, b: 0 },
+  ] as const)('종료 원인·승자·최종 HP가 모순되면 거절한다: %j', ({ reason, winnerId, a, b }) => {
+    expect(() =>
+      makeSettlementCommand(
+        matchId,
+        [
+          { ...players[0], finalHp: a },
+          { ...players[1], finalHp: b },
+        ],
+        { reason, winnerId },
+      ),
+    ).toThrow(/체력/);
+  });
+  it('실제 HP가 같은 무승부와 HP가 높은 시간 종료 승리를 허용한다', () => {
+    for (const reason of ['draw', 'timeout'] as const)
+      expect(
+        makeSettlementCommand(
+          matchId,
+          [
+            { ...players[0], finalHp: 50 },
+            { ...players[1], finalHp: 50 },
+          ],
+          { reason, winnerId: null },
+        ).participants.map((p) => p.outcome),
+      ).toEqual(['draw', 'draw']);
+    expect(
+      makeSettlementCommand(
+        matchId,
+        [
+          { ...players[0], finalHp: 70 },
+          { ...players[1], finalHp: 50 },
+        ],
+        { reason: 'timeout', winnerId: 'session-a' },
+      ).participants.map((p) => p.outcome),
+    ).toEqual(['win', 'loss']);
+    expect(
+      makeSettlementCommand(matchId, [{ ...players[0], finalHp: 0 }, players[1]], {
+        reason: 'ko',
+        winnerId: null,
+      }).participants.map((p) => p.outcome),
+    ).toEqual(['draw', 'draw']);
   });
 });

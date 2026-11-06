@@ -164,6 +164,8 @@ GitHub 자동 CI는 아직 활성화하지 않았습니다. 현재 Git 인증에
 
 ERD 기반 DB 준비에서는 타입 검사·단위 테스트 30개·웹/서버 빌드와 PostgreSQL 16.14의 스키마·권한·이관 중단 검사를 통과했습니다. `test:db`에는 `initdb`, `pg_ctl`, `psql`이 필요합니다. 실제 Supabase 적용·정산 RPC·게임의 영구 저장 연결은 [백엔드 준비서](docs/BACKEND_IMPLEMENTATION_PLAN.md)의 후속 작업입니다.
 
+추가 [재검수](docs/reviews/2026-11-06-backend-review.md)에서는 4건을 로컬 수정하고 단위 테스트 40개·빌드·003 포함 DB 검사를 통과했습니다. 2026-11-07 사용자 승인에 따라 이 수정안과 일지를 기능 브랜치에 반영합니다. 실제 DB 적용은 후속 작업입니다.
+
 ## 개발 문서와 다음 단계
 
 상세 문서와 프로젝트 작업 명세는 [`docs/`](docs/README.md)에 모아 관리합니다.

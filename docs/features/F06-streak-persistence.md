@@ -4,6 +4,7 @@
 - 우선순위: P0, 연승 서비스의 핵심
 - 상태: 메모리 정산만 구현, DB 정산·결과 조회 미완료
 - 준비 현황: [ERD 기반 DB 명세](../DATABASE.md)·002 migration·서버 계약·로컬 DB 검증 준비. [백엔드 구현 순서](../BACKEND_IMPLEMENTATION_PLAN.md)에 따라 RPC·실제 연결은 후속 구현합니다.
+- 재검수: [4건의 발견·수정·공유 승인](../reviews/2026-11-06-backend-review.md). 추가 003과 UUID/HP 검증 보완은 2026-11-07 사용자 승인에 따라 기능 브랜치에 반영합니다.
 - 기준: `bfe35d3`, [PRD](../PRD.md) 7·11절
 - 선행 기능: F01, F02, F04, F05, [기능 목록](README.md)
 

@@ -13,8 +13,11 @@ export class PersistenceContractError extends Error {
     this.name = 'PersistenceContractError';
   }
 }
-export function isDatabaseUuid(value: string): boolean {
-  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
+export function isDatabaseUuid(value: unknown): value is string {
+  return (
+    typeof value === 'string' &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)
+  );
 }
 export function normalizeNickname(value: string): { nickname: string; normalized: string } {
   const nickname = value.normalize('NFC').trim();
@@ -46,6 +49,8 @@ export function makeSettlementCommand(
     )
       throw new PersistenceContractError('최종 체력은 0~100 정수입니다.');
   }
+  if (a.userId.toLowerCase() === b.userId.toLowerCase())
+    throw new PersistenceContractError('서로 다른 두 계정 UUID가 필요합니다.');
   if (!['ko', 'timeout', 'draw', 'surrender', 'disconnect', 'void'].includes(result.reason))
     throw new PersistenceContractError('알 수 없는 경기 종료 사유입니다.');
   const winner = participants.find((participant) => participant.sessionId === result.winnerId);
@@ -55,6 +60,19 @@ export function makeSettlementCommand(
     throw new PersistenceContractError('무승부·무효 경기에 승자를 기록할 수 없습니다.');
   if (['surrender', 'disconnect'].includes(result.reason) && !winner)
     throw new PersistenceContractError('기권·단독 이탈 결과에는 승자가 필요합니다.');
+  const opponent = winner?.sessionId === a.sessionId ? b : a;
+  if (
+    result.reason === 'ko' &&
+    (winner ? winner.finalHp === 0 || opponent.finalHp !== 0 : a.finalHp !== 0 || b.finalHp !== 0)
+  )
+    throw new PersistenceContractError('KO 결과와 양쪽 최종 체력이 일치하지 않습니다.');
+  if (
+    result.reason === 'timeout' &&
+    (winner ? winner.finalHp <= opponent.finalHp : a.finalHp !== b.finalHp)
+  )
+    throw new PersistenceContractError('시간 종료 결과와 양쪽 최종 체력이 일치하지 않습니다.');
+  if (result.reason === 'draw' && a.finalHp !== b.finalHp)
+    throw new PersistenceContractError('무승부의 양쪽 최종 체력이 일치하지 않습니다.');
   const isVoid = result.reason === 'void';
   let reason: SettlementCommand['reason'];
   if (result.reason === 'void') {
@@ -67,14 +85,14 @@ export function makeSettlementCommand(
     reason = result.reason;
   }
   const mapParticipant = (p: ParticipantIdentity): SettlementParticipant => ({
-    userId: p.userId,
+    userId: p.userId.toLowerCase(),
     characterKey: p.characterKey,
     finalHp: p.finalHp,
-    outcome: isVoid ? null : !winner ? 'draw' : p.userId === winner.userId ? 'win' : 'loss',
+    outcome: isVoid ? null : !winner ? 'draw' : p.sessionId === winner.sessionId ? 'win' : 'loss',
   });
   return {
-    matchId,
-    winnerUserId: winner?.userId ?? null,
+    matchId: matchId.toLowerCase(),
+    winnerUserId: winner?.userId.toLowerCase() ?? null,
     status: isVoid ? 'void' : 'completed',
     reason,
     participants: [mapParticipant(a), mapParticipant(b)],

@@ -5,6 +5,7 @@
 - 원본: [사용자가 제공한 ERD HTML](<Deathmatch Online ERD.html>)
 - 상태: **ERD 기반 스키마·서버 계약 준비. 로컬 폐기용 PostgreSQL 검증과 실제 Supabase 적용은 구분합니다.**
 - SQL: [기존 001](../supabase/migrations/202611060001_initial_schema.sql) → [ERD 반영 002](../supabase/migrations/202611060002_align_erd.sql)
+- 재검수: [003 보완 migration](../supabase/migrations/202611060003_review_integrity.sql)과 코드 수정은 2026-11-07 사용자 승인에 따라 기능 브랜치에 반영합니다. [검수 보고서](reviews/2026-11-06-backend-review.md)를 확인하세요.
 - 다음 구현: [백엔드 구현 준비서](BACKEND_IMPLEMENTATION_PLAN.md)
 
 ## 1. 원본과 이미지 보관
@@ -161,3 +162,15 @@ Supabase 관리 테이블 1개와 서비스 테이블 6개입니다. 서비스 �
 001 파일은 변경하지 않았습니다. 002는 기존 경기·참가 기록이 있으면 중단합니다. 캐릭터를 임의로 채우거나 과거 경기를 지우지 않습니다. 실제 이관은 캐릭터 백필·NULL 계정·상태를 확인한 별도 계획이 필요합니다.
 
 검증 명령은 `npm run test:db`입니다. PostgreSQL 16 이상 실행 파일이 필요하며 새 폐기용 클러스터와 Unix 소켓만 사용하고 종료 후 정리합니다. 기존 `DATABASE_URL`, PostgreSQL 접속 환경, 실행 중인 5432 포트의 DB는 사용하지 않습니다. 지연 제약은 [PostgreSQL의 제약 검사 시점](https://www.postgresql.org/docs/16/sql-set-constraints.html)을 따릅니다.
+
+## 7. 재검수 보완안 — 공유 승인
+
+001·002와 사용자 ERD 원본은 변경하지 않았습니다. 다음 변경은 003과 서버 코드에 준비했으며 2026-11-07 사용자가 커밋·푸시를 승인했습니다. 실제 Supabase에는 적용하지 않았습니다. 테이블 6개·컬럼 39개는 그대로입니다.
+
+- UUID는 입력 형태를 검사한 뒤 소문자 기준으로 동일 계정을 판별하고 DB 경기·계정 ID도 소문자로 반환합니다. 입력 객체를 변경하지 않습니다.
+- KO 승리는 승자 HP > 0·패자 HP = 0, 승자 없는 KO는 양쪽 HP = 0이어야 합니다. 시간 종료 승리는 더 높은 HP, 시간 종료 무승부·기존 `draw`는 같은 HP여야 합니다. 현재 0~100·동일 최대 HP 규칙을 전제로 서버와 DB 양쪽에서 검사합니다. 캐릭터별 최대 HP 정책을 바꾸면 이 검증도 규칙 버전과 함께 변경해야 합니다.
+- `void` 사유 NULL을 별도 CHECK로 거절합니다. SQL CHECK가 NULL을 통과시키는 동작을 고려한 보완입니다.
+- 서버 테이블 권한은 SELECT·INSERT·UPDATE·DELETE, 이벤트 시퀀스는 USAGE·SELECT로 제한합니다. TRUNCATE·TRIGGER·REFERENCES·시퀀스 재설정 권한은 주지 않습니다. DB 소유자의 유지보수 권한은 별도입니다.
+- 003은 기존 경기 전체의 참가자·결과 정합성도 검사합니다. 잘못된 기록이 있으면 데이터·권한·DDL 변경을 함께 롤백하며 임의로 과거 승패를 고치지 않습니다.
+
+공식 근거: [PostgreSQL UUID](https://www.postgresql.org/docs/16/datatype-uuid.html), [CHECK의 NULL 처리](https://www.postgresql.org/docs/16/ddl-constraints.html), [권한별 의미](https://www.postgresql.org/docs/16/ddl-priv.html).

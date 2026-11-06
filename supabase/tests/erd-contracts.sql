@@ -8,14 +8,18 @@ begin
   if p_condition is distinct from true then raise exception 'FAIL: %', p_message; end if;
 end;
 $$;
-create function test.expect_error(p_sql text, p_state text, p_deferred boolean default false)
+create function test.expect_error(p_sql text, p_state text, p_deferred boolean default false,
+  p_constraint text default null)
 returns void language plpgsql as $$
+declare
+  actual_constraint text;
 begin
   begin
     execute p_sql;
     if p_deferred then set constraints all immediate; end if;
   exception when others then
-    if sqlstate = p_state then return; end if;
+    get stacked diagnostics actual_constraint = constraint_name;
+    if sqlstate = p_state and (p_constraint is null or p_constraint = actual_constraint) then return; end if;
     raise exception 'FAIL: 예상 SQLSTATE %, 실제 % (%)', p_state, sqlstate, sqlerrm;
   end;
   raise exception 'FAIL: 거절돼야 할 SQL이 성공했습니다: %', p_sql;
@@ -99,6 +103,48 @@ select test.expect_error($sql$delete from auth.users
 select test.assert((select count(*) = 3 from public.profiles), '계정 삭제 거절 시 프로필 삭제도 롤백');
 select 'PASS: 상태·시각·승자·참가 결과 일치·경기 계정 삭제 보호';
 
+select test.expect_error($sql$update public.match_participants set final_hp=0
+  where user_id='20000000-0000-0000-0000-000000000001'$sql$,
+  '23514',true,'match_result_health_consistency');
+select test.expect_error($sql$update public.match_participants set final_hp=10
+  where user_id='20000000-0000-0000-0000-000000000002'$sql$,
+  '23514',true,'match_result_health_consistency');
+select test.expect_error($sql$update public.matches set reason='timeout';
+  update public.match_participants set final_hp=70
+  where user_id='20000000-0000-0000-0000-000000000002'$sql$,
+  '23514',true,'match_result_health_consistency');
+select test.expect_error($sql$update public.matches set reason='timeout';
+  update public.match_participants set final_hp=60
+  where user_id='20000000-0000-0000-0000-000000000002'$sql$,
+  '23514',true,'match_result_health_consistency');
+select test.expect_error($sql$update public.matches set reason='draw',winner_id=null;
+  update public.match_participants set outcome='draw',streak_after=0$sql$,
+  '23514',true,'match_result_health_consistency');
+select test.expect_error($sql$insert into public.matches
+  (id,player1_id,player2_id,status,ended_at,rules_version,server_instance_id)
+  values('10000000-0000-0000-0000-000000000097','20000000-0000-0000-0000-000000000001',
+  '20000000-0000-0000-0000-000000000002','void',now(),'test','test');
+  insert into public.match_participants(match_id,user_id,character_key) values
+  ('10000000-0000-0000-0000-000000000097','20000000-0000-0000-0000-000000000001','sword'),
+  ('10000000-0000-0000-0000-000000000097','20000000-0000-0000-0000-000000000002','mage')$sql$,
+  '23514',true,'matches_void_reason_required');
+
+begin;
+update public.matches set reason='timeout';
+set constraints all immediate;
+rollback;
+begin;
+update public.matches set reason='draw',winner_id=null;
+update public.match_participants set outcome='draw',streak_after=0,final_hp=50;
+set constraints all immediate;
+rollback;
+begin;
+update public.matches set reason='ko',winner_id=null;
+update public.match_participants set outcome='draw',streak_after=0,final_hp=0;
+set constraints all immediate;
+rollback;
+select 'PASS: KO·시간 종료·무승부의 HP 일치·무효 사유 필수';
+
 begin;
 insert into public.matches(id,player1_id,player2_id,rules_version,server_instance_id)
   values('10000000-0000-0000-0000-000000000098','20000000-0000-0000-0000-000000000001',
@@ -158,7 +204,16 @@ reset role;
 set role service_role;
 select test.assert((select count(*) = 1 from public.match_events), '서버 역할 이벤트 접근');
 select test.assert((select count(*) = 1 from public.active_participations), '서버 역할 참가 잠금 접근');
+select test.expect_error('truncate public.match_participants','42501');
+select test.assert(not has_table_privilege(current_user,'public.matches','TRIGGER'), '불필요한 TRIGGER 권한 제거');
+select test.expect_error($sql$select setval('public.match_events_id_seq',999)$sql$,'42501');
+select test.expect_error($sql$select public.assert_match_result_health('10000000-0000-0000-0000-000000000001')$sql$,'42501');
+insert into public.match_events(match_id,event_type,payload)
+  values('10000000-0000-0000-0000-000000000001','reconnect','{"source":"review-test"}');
+update public.matches set server_instance_id=server_instance_id
+  where id='10000000-0000-0000-0000-000000000001';
 reset role;
+select 'PASS: 서버 역할 TRUNCATE·TRIGGER·시퀀스 재설정 거절, 정상 기록·검증 트리거 유지';
 select 'PASS: 두 인증 계정·비참가자·익명·서버 역할의 RLS와 쓰기 권한';
 
 -- 테스트 편의 삭제와 실제 운영의 보관 정책은 구분합니다.

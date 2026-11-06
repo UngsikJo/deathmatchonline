@@ -95,6 +95,68 @@ function verifyUpgradeGuard(): void {
     throw new Error('중단된 업그레이드가 기존 스키마·행을 보존하지 못했습니다.');
   console.log('PASS: 기존 기록 이관 요구·migration 롤백·원본 데이터 보존');
 }
+function verifyReviewMigrationGuard(): void {
+  const database = 'deathmatch_review_guard_test';
+  run('psql', [
+    '-X',
+    '-v',
+    'ON_ERROR_STOP=1',
+    '-d',
+    'postgres',
+    '-c',
+    `create database ${database} template deathmatch_contract_test;`,
+  ]);
+  run('psql', [
+    '-X',
+    '-v',
+    'ON_ERROR_STOP=1',
+    '-d',
+    database,
+    '-c',
+    `
+    insert into auth.users(id) values
+      ('30000000-0000-0000-0000-000000000001'),('30000000-0000-0000-0000-000000000002');
+    insert into public.matches(id,player1_id,player2_id,status,reason,winner_id,started_at,ended_at,rules_version,server_instance_id)
+      values('40000000-0000-0000-0000-000000000001','30000000-0000-0000-0000-000000000001',
+      '30000000-0000-0000-0000-000000000002','completed','ko','30000000-0000-0000-0000-000000000001',now(),now(),'legacy','test');
+    insert into public.match_participants(match_id,user_id,character_key,outcome,streak_before,streak_after,final_hp) values
+      ('40000000-0000-0000-0000-000000000001','30000000-0000-0000-0000-000000000001','sword','win',0,1,0),
+      ('40000000-0000-0000-0000-000000000001','30000000-0000-0000-0000-000000000002','mage','loss',0,0,60);`,
+  ]);
+  const rejected = spawnSync(
+    'psql',
+    [
+      '-X',
+      '-v',
+      'ON_ERROR_STOP=1',
+      '-d',
+      database,
+      '-f',
+      join(root, 'supabase/migrations/202611060003_review_integrity.sql'),
+    ],
+    { env, encoding: 'utf8', timeout: 30_000 },
+  );
+  if (rejected.error || rejected.status === 0 || !rejected.stderr.includes('최종 체력'))
+    throw new Error('003이 기존의 모순된 KO 결과를 안전하게 거절하지 못했습니다.');
+  const preserved = run('psql', [
+    '-X',
+    '-A',
+    '-t',
+    '-v',
+    'ON_ERROR_STOP=1',
+    '-d',
+    database,
+    '-c',
+    `
+    select (select count(*)=2 from public.match_participants)
+      and not exists(select 1 from pg_constraint where conname='matches_void_reason_required')
+      and to_regprocedure('public.assert_match_result_health(uuid)') is null
+      and has_table_privilege('service_role','public.match_participants','TRUNCATE');`,
+  ]);
+  if (preserved.trim() !== 't')
+    throw new Error('003 중단 시 데이터·제약·함수·권한 롤백에 실패했습니다.');
+  console.log('PASS: 003의 기존 모순 결과 거절·데이터·권한·DDL 롤백');
+}
 try {
   run('initdb', ['-D', data, '-U', 'postgres', '-A', 'trust', '--no-locale', '--encoding=UTF8']);
   startAttempted = true;
@@ -124,6 +186,7 @@ try {
     .filter((p) => p.endsWith('.sql'))
     .sort()) {
     if (name === '202611060002_align_erd.sql') verifyUpgradeGuard();
+    if (name === '202611060003_review_integrity.sql') verifyReviewMigrationGuard();
     run('psql', ['-X', '-v', 'ON_ERROR_STOP=1', '-f', join(root, 'supabase/migrations', name)]);
     console.log(`PASS: migration ${name}`);
   }

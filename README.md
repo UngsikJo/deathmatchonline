@@ -171,6 +171,7 @@ GitHub 자동 CI는 아직 활성화하지 않았습니다. 현재 Git 인증에
 - [1인 개발 진행 현황과 다음 작업](docs/ROADMAP.md)
 - [시스템 구조와 영구 저장 도입 계획](docs/ARCHITECTURE.md)
 - [개발 환경·작업 규칙](docs/DEVELOPMENT.md)
+- [한국어 커밋 메시지 작성 규칙](docs/COMMIT_CONVENTION.md)
 - [Supabase 설정과 DB 스키마 적용 안내](docs/SUPABASE.md)
 - [에셋 출처와 라이선스 기록](docs/ASSET_LICENSES.md)
 - [자동 CI 설정 템플릿과 활성화 방법](docs/CI.md)

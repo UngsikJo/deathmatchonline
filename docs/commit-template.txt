@@ -1,0 +1,14 @@
+# <유형>(<범위>): <한국어 제목>
+# 예: feat(F06): 경기 결과와 연승 영구 정산 추가
+# 범위 생략 가능. 예: docs: 작업 일지 갱신
+# 제목은 한 줄 72자 이내, 마침표 없이 작성합니다.
+# 필요한 식별자·고유명을 제외한 제목과 본문은 한국어로 씁니다.
+#
+# 유형: feat, fix, docs, refactor, test, perf, style, build, ci, chore, revert
+# 범위: F01~F12 또는 web, server, shared, db, deps, release
+#
+# 본문이 필요하면 제목 다음에 빈 줄을 두고 변경 이유와 영향을 적습니다.
+# 검증: 실제 수행한 명령과 결과
+# 관련 이슈: #번호
+#
+# 상세 규칙: docs/COMMIT_CONVENTION.md

@@ -28,7 +28,9 @@ export default function App() {
   const [now, setNow] = useState(0);
   const snapshot = view.snapshot;
   const mine = snapshot?.players.find((p) => p.id === view.sessionId);
-  const opponent = snapshot?.players.find((p) => p.id !== view.sessionId);
+  // HUD bars sit on the side each fighter starts on, so the screen and the bars agree.
+  const leftFighter = snapshot?.players.find((p) => p.slot === 0);
+  const rightFighter = snapshot?.players.find((p) => p.slot === 1);
   const active = snapshot?.phase === 'active';
   const finished = snapshot?.phase === 'finished';
   const busy = view.status === 'connecting' || view.status === 'reconnecting';
@@ -234,11 +236,11 @@ export default function App() {
             <div className="combat-hud">
               <div className="fighter">
                 <div>
-                  <strong>{mine?.nickname || '나의 캐릭터'}</strong>
-                  <span>YOU</span>
+                  <strong>{leftFighter?.nickname || '도전자를 기다립니다'}</strong>
+                  <span>{leftFighter?.id === view.sessionId ? 'YOU' : 'RIVAL'}</span>
                 </div>
                 <div className="hp-track">
-                  <div style={{ width: `${mine?.hp ?? RULES.maxHp}%` }} />
+                  <div style={{ width: `${leftFighter?.hp ?? RULES.maxHp}%` }} />
                 </div>
               </div>
               <div className="match-clock">
@@ -252,11 +254,11 @@ export default function App() {
               </div>
               <div className="fighter opponent">
                 <div>
-                  <strong>{opponent?.nickname || '상대를 기다립니다'}</strong>
-                  <span>RIVAL</span>
+                  <strong>{rightFighter?.nickname || '상대를 기다립니다'}</strong>
+                  <span>{rightFighter?.id === view.sessionId ? 'YOU' : 'RIVAL'}</span>
                 </div>
                 <div className="hp-track">
-                  <div style={{ width: `${opponent?.hp ?? RULES.maxHp}%` }} />
+                  <div style={{ width: `${rightFighter?.hp ?? RULES.maxHp}%` }} />
                 </div>
               </div>
             </div>
@@ -307,7 +309,7 @@ export default function App() {
               {menu && (
                 <div className="arena-overlay menu">
                   <h2>경기 메뉴</h2>
-                  <p>방향키 이동 · A S D F Q W E R 스킬</p>
+                  <p>← → 이동 · ↑ 점프 · ↓ 앉기 · A S D F Q W E R 스킬</p>
                   {active && <p className="warning">메뉴를 열어도 전투는 계속됩니다.</p>}
                   <button
                     className="button secondary"
@@ -346,7 +348,7 @@ export default function App() {
                 <span className="arrow-keys">
                   ↑<br />← ↓ →
                 </span>
-                <span>이동 / 방향 조준</span>
+                <span>↑ 점프 · ↓ 앉기 · ←→ 이동</span>
               </div>
               <div className="skill-grid">
                 {DISPLAY_KEYS.map((key) => {
@@ -369,7 +371,7 @@ export default function App() {
               <div className="skill-hint">
                 <span>8 SKILLS</span>
                 <p>
-                  마지막 이동 방향으로 공격
+                  항상 상대를 향해 공격
                   <br />
                   경기장을 클릭하면 조작 시작
                 </p>

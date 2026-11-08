@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { RULES } from '@deathmatch/shared';
 
 export function GameCanvas() {
   const container = useRef<HTMLDivElement>(null);
@@ -12,9 +13,9 @@ export function GameCanvas() {
         game = new Phaser.Game({
           type: Phaser.AUTO,
           parent: container.current,
-          width: 960,
-          height: 640,
-          backgroundColor: '#151e28',
+          width: RULES.width,
+          height: RULES.height,
+          backgroundColor: '#1b1838',
           pixelArt: true,
           scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
           scene: [ArenaScene],

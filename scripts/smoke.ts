@@ -100,6 +100,11 @@ try {
     () => snapshotA?.phase === 'active' && snapshotB?.phase === 'active',
     'Match did not start',
   );
+  const simStart = snapshotA!.time;
+  const wallStart = performance.now();
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  const simRate = (snapshotA!.time - simStart) / (performance.now() - wallStart);
+  assert.ok(simRate > 0.85 && simRate < 1.15, `Match clock runs at ${simRate.toFixed(2)}x`);
   const startX = snapshotA!.players.find((p) => p.id === a.sessionId)!.x;
   a.send('input', { seq: 0, x: 1, y: 0 });
   await until(
@@ -119,6 +124,8 @@ try {
   a.onReconnect(() => {
     reconnected = true;
   });
+  // Same setting as the web client; the default 5s would outlast this short test.
+  a.reconnection.minUptime = 1000;
   const sessionBeforeDrop = a.sessionId;
   a.connection.close(CloseCode.MAY_TRY_RECONNECT, 'integration reconnect test');
   await until(() => dropped && reconnected, 'Client did not reconnect within the grace period');
@@ -149,7 +156,7 @@ try {
   next.send('ready');
   await until(() => restored?.currentStreak === 1, 'Streak was not preserved between matches');
   console.log(
-    'PASS: health, origin, two-client matching, duplicate identity, countdown, movement, shield, reconnection, surrender, once-only settlement, streak preservation',
+    'PASS: health, origin, two-client matching, duplicate identity, countdown, real-time match clock, movement, shield, reconnection, surrender, once-only settlement, streak preservation',
   );
 } catch (error) {
   console.error(output);

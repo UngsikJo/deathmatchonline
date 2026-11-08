@@ -67,6 +67,8 @@ export class GameSession {
       }
       this.room = room;
       this.sequence = 0;
+      // The SDK default of 5s would refuse to reconnect during the first seconds of a match.
+      room.reconnection.minUptime = 1000;
       room.onMessage<Snapshot>('snapshot', (snapshot) => {
         if (this.room !== room || snapshot.protocol !== 1) return;
         this.lastReceivedAt = performance.now();

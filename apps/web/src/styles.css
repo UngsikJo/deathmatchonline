@@ -407,7 +407,7 @@ input {
 }
 .canvas-wrap {
   width: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 9;
 }
 .canvas-wrap canvas {
   display: block;

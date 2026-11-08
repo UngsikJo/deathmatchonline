@@ -1,11 +1,18 @@
 import {
+  ATTACKS,
+  PROJECTILES,
+  PROJECTILE_RANGE,
   RULES,
+  SHOCKWAVE_PUSH,
   SKILLS,
   SKILL_KEYS,
-  blocked,
-  move,
-  normalize,
-  pointSegmentDistance,
+  attackHits,
+  bodiesOverlapVertically,
+  clampStageX,
+  isGrounded,
+  projectileHits,
+  stepBody,
+  type Facing,
   type SkillKey,
   type Vec2,
 } from './rules.js';
@@ -23,14 +30,13 @@ interface Player extends PlayerSnapshot {
   input: Vec2;
   lastInputAt: number;
   nextSkillAt: number;
-  dashUntil: number;
-  dashDirection: Vec2;
+  dashDirection: Facing;
 }
 interface Hit {
   target: Player;
   damage: number;
   slow?: boolean;
-  push?: Vec2;
+  push?: number;
 }
 
 /** Pure server-owned combat, using simulation time only. No browser, database or socket APIs. */
@@ -52,23 +58,26 @@ export class Simulation {
       id,
       nickname,
       slot,
-      x: slot === 0 ? 150 : 810,
-      y: 320,
+      x: RULES.spawnX[slot]!,
+      y: RULES.groundY,
+      vy: 0,
+      crouching: false,
       hp: RULES.maxHp,
-      facing: { x: slot === 0 ? 1 : -1, y: 0 },
+      facing: slot === 0 ? 1 : -1,
       connected: true,
       ready: false,
       shield: 0,
       shieldUntil: 0,
       slowUntil: 0,
+      hitUntil: 0,
+      dashUntil: 0,
       cooldowns: Object.fromEntries(SKILL_KEYS.map((key) => [key, 0])) as Record<SkillKey, number>,
       cast: null,
       lastSeq: -1,
       input: { x: 0, y: 0 },
       lastInputAt: 0,
       nextSkillAt: 0,
-      dashUntil: 0,
-      dashDirection: { x: 0, y: 0 },
+      dashDirection: slot === 0 ? 1 : -1,
     });
   }
 
@@ -89,23 +98,23 @@ export class Simulation {
       return;
     player.lastSeq = message.seq;
     player.lastInputAt = this.time;
-    player.input = normalize(message.x, message.y);
-    if (player.input.x || player.input.y) player.facing = { ...player.input };
+    player.input = { x: Math.sign(message.x), y: Math.sign(message.y) };
     if (
       !message.skill ||
       player.cast ||
       this.time < player.nextSkillAt ||
       this.time < player.cooldowns[message.skill] ||
-      this.time < player.dashUntil
+      this.time < player.dashUntil ||
+      this.time < player.hitUntil
     )
       return;
     const key = message.skill;
     player.cooldowns[key] = this.time + SKILLS[key].cooldownMs;
     player.nextSkillAt = this.time + RULES.globalCooldownMs;
     if (key === 'D') {
-      player.dashUntil = this.time + 180;
-      player.dashDirection = { ...player.facing };
-      this.effect(player, key, player.facing);
+      player.dashUntil = this.time + RULES.dashMs;
+      player.dashDirection = player.input.x ? (player.input.x as Facing) : player.facing;
+      this.effect(player, key, player.dashDirection);
     } else if (key === 'F') {
       player.shield = 20;
       player.shieldUntil = this.time + 1200;
@@ -114,7 +123,7 @@ export class Simulation {
       player.cast = {
         key,
         resolveAt: this.time + SKILLS[key].castMs,
-        direction: { ...player.facing },
+        direction: player.facing,
       };
     }
   }
@@ -152,32 +161,11 @@ export class Simulation {
     if (this.phase === 'countdown' && this.time >= this.startsAt) this.phase = 'active';
     if (this.phase !== 'active') return;
     const hits: Hit[] = [];
+    for (const player of this.players.values()) this.moveBody(player, dt);
+    this.separateBodies();
+    this.faceOpponents();
+    // Attacks resolve after every body has moved, so neither player gets a tick of advantage.
     for (const player of this.players.values()) {
-      if (this.time >= player.shieldUntil) player.shield = 0;
-      const dashMs = Math.max(
-        0,
-        Math.min(this.time, player.dashUntil) - Math.max(this.time - dt, player.dashUntil - 180),
-      );
-      const direction =
-        this.time - player.lastInputAt <= RULES.staleInputMs ? player.input : { x: 0, y: 0 };
-      const speed = RULES.speed * (player.slowUntil > this.time ? 0.6 : 1);
-      if (player.cast?.key !== 'R') {
-        if (dashMs > 0)
-          Object.assign(
-            player,
-            move(player, {
-              x: (player.dashDirection.x * 120 * dashMs) / 180,
-              y: (player.dashDirection.y * 120 * dashMs) / 180,
-            }),
-          );
-        Object.assign(
-          player,
-          move(player, {
-            x: (direction.x * speed * (dt - dashMs)) / 1000,
-            y: (direction.y * speed * (dt - dashMs)) / 1000,
-          }),
-        );
-      }
       if (player.cast && this.time >= player.cast.resolveAt) {
         this.resolve(player, hits);
         player.cast = null;
@@ -188,8 +176,9 @@ export class Simulation {
       const absorbed = Math.min(hit.target.shield, hit.damage);
       hit.target.shield -= absorbed;
       hit.target.hp = Math.max(0, hit.target.hp - hit.damage + absorbed);
+      if (absorbed < hit.damage) hit.target.hitUntil = this.time + RULES.hitstunMs;
       if (hit.slow) hit.target.slowUntil = this.time + 1500;
-      if (hit.push) Object.assign(hit.target, move(hit.target, hit.push));
+      if (hit.push) hit.target.x = clampStageX(hit.target.x + hit.push);
     }
     const players = [...this.players.values()];
     const dead = players.filter((p) => p.hp <= 0);
@@ -208,7 +197,7 @@ export class Simulation {
 
   snapshot(): Snapshot {
     return {
-      protocol: 1,
+      protocol: 2,
       phase: this.phase,
       time: this.time,
       startsAt: this.startsAt,
@@ -218,20 +207,71 @@ export class Simulation {
           input: _input,
           lastInputAt: _at,
           nextSkillAt: _next,
-          dashUntil: _dash,
           dashDirection: _direction,
           ...player
         }) => ({
           ...player,
-          facing: { ...player.facing },
           cooldowns: { ...player.cooldowns },
-          cast: player.cast ? { ...player.cast, direction: { ...player.cast.direction } } : null,
+          cast: player.cast ? { ...player.cast } : null,
         }),
       ),
-      projectiles: this.projectiles.map((p) => ({ ...p, direction: { ...p.direction } })),
-      effects: this.effects.map((e) => ({ ...e, direction: { ...e.direction } })),
+      projectiles: this.projectiles.map((p) => ({ ...p })),
+      effects: this.effects.map((e) => ({ ...e })),
       result: this.result ? { ...this.result } : null,
     };
+  }
+
+  private moveBody(player: Player, dt: number): void {
+    if (this.time >= player.shieldUntil) player.shield = 0;
+    const dashMs = Math.max(
+      0,
+      Math.min(this.time, player.dashUntil) -
+        Math.max(this.time - dt, player.dashUntil - RULES.dashMs),
+    );
+    if (dashMs > 0)
+      player.x = clampStageX(
+        player.x + (player.dashDirection * RULES.dashDistance * dashMs) / RULES.dashMs,
+      );
+    const held = this.time - player.lastInputAt <= RULES.staleInputMs ? player.input : null;
+    stepBody(
+      player,
+      {
+        move: held?.x ?? 0,
+        jump: (held?.y ?? 0) < 0,
+        crouch: (held?.y ?? 0) > 0,
+        locked: player.cast !== null || this.time < player.hitUntil,
+        slowed: player.slowUntil > this.time,
+      },
+      dt,
+      dt - dashMs,
+    );
+  }
+
+  /** Bodies block each other unless one clears the other vertically. */
+  private separateBodies(): void {
+    const [a, b] = this.players.values();
+    if (!a || !b || !bodiesOverlapVertically(a, b)) return;
+    const minimum = RULES.halfWidth * 2;
+    const distance = Math.abs(b.x - a.x);
+    if (distance >= minimum) return;
+    const side = b.x === a.x ? (a.slot < b.slot ? 1 : -1) : Math.sign(b.x - a.x);
+    // Re-derive from the clamped side so a body pinned at the stage edge pushes the other fully.
+    a.x = clampStageX(a.x - (side * (minimum - distance)) / 2);
+    b.x = clampStageX(a.x + side * minimum);
+    a.x = clampStageX(b.x - side * minimum);
+  }
+
+  /** Fighters turn to face each other, except mid-air, while casting, or during a dash. */
+  private faceOpponents(): void {
+    const [a, b] = this.players.values();
+    if (!a || !b || a.x === b.x) return;
+    for (const [self, other] of [
+      [a, b],
+      [b, a],
+    ] as const) {
+      if (isGrounded(self) && !self.cast && this.time >= self.dashUntil)
+        self.facing = other.x > self.x ? 1 : -1;
+    }
   }
 
   private finish(result: MatchResult): void {
@@ -242,20 +282,20 @@ export class Simulation {
     for (const player of this.players.values()) player.cast = null;
   }
 
-  private effect(player: Player, key: SkillKey, direction: Vec2): void {
+  private effect(player: Player, key: SkillKey, direction: Facing): void {
     this.effects.push({
       id: this.nextId++,
+      ownerId: player.id,
       key,
       x: player.x,
       y: player.y,
-      direction: { ...direction },
-      until: this.time + 220,
+      direction,
+      until: this.time + RULES.effectMs,
     });
   }
 
   private resolve(player: Player, hits: Hit[]): void {
-    const cast = player.cast!;
-    const { key, direction } = cast;
+    const { key, direction } = player.cast!;
     this.effect(player, key, direction);
     if (key === 'S' || key === 'W') {
       this.projectiles.push({
@@ -263,64 +303,39 @@ export class Simulation {
         ownerId: player.id,
         key,
         x: player.x,
-        y: player.y,
-        direction: { ...direction },
-        remaining: 480,
+        y: player.y - PROJECTILES[key].height,
+        direction,
+        remaining: PROJECTILE_RANGE,
       });
       return;
     }
+    if (key === 'D' || key === 'F') return;
     for (const target of this.players.values()) {
-      if (target.id === player.id || blocked(player, target)) continue;
-      const dx = target.x - player.x;
-      const dy = target.y - player.y;
-      const distance = Math.hypot(dx, dy);
-      const forward = dx * direction.x + dy * direction.y;
-      const side = Math.abs(dx * direction.y - dy * direction.x);
-      const hit =
-        key === 'A'
-          ? distance <= 70 + RULES.radius && (distance === 0 || forward / distance >= Math.SQRT1_2)
-          : key === 'Q'
-            ? distance <= 90 + RULES.radius
-            : key === 'E'
-              ? forward >= 0 && forward <= 120 + RULES.radius && side <= 30 + RULES.radius
-              : key === 'R'
-                ? forward >= 0 && forward <= 300 + RULES.radius && side <= 32 + RULES.radius
-                : false;
-      if (hit)
-        hits.push({
-          target,
-          damage: SKILLS[key].damage,
-          ...(key === 'E' ? { push: { x: direction.x * 60, y: direction.y * 60 } } : {}),
-        });
+      if (target.id === player.id || !attackHits(player, direction, ATTACKS[key], target)) continue;
+      hits.push({
+        target,
+        damage: SKILLS[key].damage,
+        ...(key === 'E' ? { push: direction * SHOCKWAVE_PUSH } : {}),
+      });
     }
   }
 
   private advanceProjectiles(dt: number, hits: Hit[]): void {
     this.projectiles = this.projectiles.filter((projectile) => {
-      const speed = projectile.key === 'S' ? 520 : 400;
+      const { speed, radius } = PROJECTILES[projectile.key];
       const distance = Math.min(projectile.remaining, (speed * dt) / 1000);
-      const next = {
-        x: projectile.x + projectile.direction.x * distance,
-        y: projectile.y + projectile.direction.y * distance,
-      };
-      if (
-        blocked(projectile, next) ||
-        next.x < 0 ||
-        next.x > RULES.width ||
-        next.y < 0 ||
-        next.y > RULES.height
-      )
-        return false;
+      const nextX = projectile.x + projectile.direction * distance;
+      if (nextX < 0 || nextX > RULES.width) return false;
       const target = [...this.players.values()].find(
         (p) =>
           p.id !== projectile.ownerId &&
-          pointSegmentDistance(p, projectile, next) <= RULES.radius + 5,
+          projectileHits(projectile.x, nextX, projectile.y, radius, p),
       );
       if (target) {
         hits.push({ target, damage: SKILLS[projectile.key].damage, slow: projectile.key === 'W' });
         return false;
       }
-      Object.assign(projectile, next);
+      projectile.x = nextX;
       projectile.remaining -= distance;
       return projectile.remaining > 0;
     });

@@ -1,4 +1,4 @@
-import { SKILL_KEYS, type SkillKey, type Vec2 } from './rules.js';
+import { SKILL_KEYS, type Facing, type SkillKey, type Vec2 } from './rules.js';
 
 export interface InputMessage {
   seq: number;
@@ -22,19 +22,24 @@ export interface PlayerStats {
 export interface Cast {
   key: SkillKey;
   resolveAt: number;
-  direction: Vec2;
+  direction: Facing;
 }
 export interface PlayerSnapshot extends Vec2 {
   id: string;
   nickname: string;
   slot: number;
   hp: number;
-  facing: Vec2;
+  /** Vertical velocity in px/s, negative while rising. */
+  vy: number;
+  crouching: boolean;
+  facing: Facing;
   connected: boolean;
   ready: boolean;
   shield: number;
   shieldUntil: number;
   slowUntil: number;
+  hitUntil: number;
+  dashUntil: number;
   cooldowns: Record<SkillKey, number>;
   cast: Cast | null;
   lastSeq: number;
@@ -43,17 +48,18 @@ export interface Projectile extends Vec2 {
   id: number;
   ownerId: string;
   key: 'S' | 'W';
-  direction: Vec2;
+  direction: Facing;
   remaining: number;
 }
 export interface Effect extends Vec2 {
   id: number;
+  ownerId: string;
   key: SkillKey;
-  direction: Vec2;
+  direction: Facing;
   until: number;
 }
 export interface Snapshot {
-  protocol: 1;
+  protocol: 2;
   phase: Phase;
   time: number;
   startsAt: number;

@@ -67,8 +67,10 @@ export class GameSession {
       }
       this.room = room;
       this.sequence = 0;
+      // The SDK default of 5s would refuse to reconnect during the first seconds of a match.
+      room.reconnection.minUptime = 1000;
       room.onMessage<Snapshot>('snapshot', (snapshot) => {
-        if (this.room !== room || snapshot.protocol !== 1) return;
+        if (this.room !== room || snapshot.protocol !== 2) return;
         this.lastReceivedAt = performance.now();
         const mine = snapshot.players.find((p) => p.id === room.sessionId);
         this.sequence = Math.max(this.sequence, (mine?.lastSeq ?? -1) + 1);

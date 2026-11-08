@@ -8,7 +8,6 @@ export function makeDuelRoom(
 ) {
   return class DuelRoom extends Room {
     maxClients = 2;
-    patchRate = null;
     private game = new Simulation();
     private identities = new Map<string, Identity>();
     private disconnects = new Map<string, { used: number; droppedAt: number | null }>();
@@ -20,6 +19,9 @@ export function makeDuelRoom(
         this.game.step();
         this.finalize();
       }, 30);
+      // Must follow setFixedTimestep: set earlier, Colyseus starts a second clock ticker that
+      // steals elapsed time from the fixed step and runs the match in slow motion.
+      this.patchRate = null;
       this.clock.setInterval(
         () => this.broadcast('snapshot', this.game.snapshot()),
         RULES.snapshotMs,
